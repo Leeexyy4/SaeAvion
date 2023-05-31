@@ -1,7 +1,7 @@
 import sys, Vue
 import psycopg2
 import matplotlib.pyplot as plt
-from Controlleur import *
+from Controlleur_Arno import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
