@@ -1,7 +1,7 @@
 import sys, Vue
 import psycopg2
 import matplotlib.pyplot as plt
-from test_requete import *
+from Controlleur_Arno import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -9,10 +9,10 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Controller():
     def __init__(self) -> None:
-        self.DB_NAME = "saeavion"
-        self.DB_USER = "emma"
-        self.DB_PASS = "0111"
-        self.DB_HOST = "172.28.144.1"
+        self.DB_NAME = "SAE_BDD" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
+        self.DB_USER = "wissocq"
+        self.DB_PASS = "arnaudwq"
+        self.DB_HOST = "172.25.176.1"
         self.DB_PORT = "5432"
 
         self.vue = Vue.Interface()
@@ -38,7 +38,7 @@ class Controller():
 
         #cur.execute("SELECT COUNT(aeroport_id) FROM routes r, aeroport a, pays p WHERE r.aeroport_arr_id=a.aeroport_id AND p.pays_id = a.pays_id AND pays_nom ILIKE 'germany'")
         #cur.execute(requete)
-        cur.execute("SELECT latitude, longitude FROM aeroport WHERE type LIKE 'airport' AND pays_id=(SELECT pays_id FROM pays WHERE pays_nom ILIKE 'FRANCE')")
+        cur.execute(requete)
 
         
         rows = cur.fetchall()
