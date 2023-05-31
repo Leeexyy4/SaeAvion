@@ -98,6 +98,7 @@ class Infos_Pays(QVBoxLayout) :
         self.envoiCommande.emit(self.requete_sql)
 
 class Listes_Pays(QWidget):
+    #coucou
     
     def __init__(self) -> None:
         super().__init__()
