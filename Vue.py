@@ -435,7 +435,7 @@ class Interface(QWidget):
         
         self.affichage = QHBoxLayout()
         self.affichage.addLayout(self.combobox.layout1)
-        self.affichage.addLayout(self.combobox.layout2)
+        self.affichage.addLayout(self.combobox.layout)
         self.affichage.addLayout(self.compagnie)
         self.affichage.addLayout(self.pays)
         self.affichage.addLayout(self.infos_pays)

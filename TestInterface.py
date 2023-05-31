@@ -1,9 +1,9 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 
-
+# Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
 class Listes_Pays(QWidget):
     def __init__(self) -> None:
         super().__init__()
@@ -43,8 +43,7 @@ class Listes_Pays(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
         
-
-
+# Classe Liste_compagnies qui reprend le bandeau déroulant des compagnies et le texte associé
 class Liste_Compagnies(QWidget):
     def __init__(self) -> None:
         super().__init__()
@@ -83,8 +82,73 @@ class Liste_Compagnies(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
         
-class Image():
-    pass
+
+# Classe Informations qui reprend le logo et les informations
+class Informations(QWidget):
+    def __init__(self):
+        super().__init__()
+        
+        # Ajout des informations
+        self.info = QLabel("Informations")
+        self.info.setStyleSheet("padding-left: 100px;padding-right: 100px;")
+        self.info.setAlignment(Qt.AlignmentFlag.AlignTop)
+        
+        # Bandeau du nom de la compagnie et du champ d'écriture du nom
+        self.nom_comp = QHBoxLayout()
+        self.nom_comp_label = QLabel("Nom :   ")
+        self.nom_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
+        self.nom_comp_champ = QLineEdit()
+        self.nom_comp_champ.setFixedWidth(200)
+        self.nom_comp_champ.setStyleSheet("margin-right: 10px;")
+        self.nom_comp.addWidget(self.nom_comp_label)
+        self.nom_comp.addWidget(self.nom_comp_champ)
+        
+        # Bandeau du pays et du champ d'écriture du pays
+        self.pays_comp = QHBoxLayout()
+        self.pays_comp_label = QLabel("Pays :    ")
+        self.pays_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
+        self.pays_comp_champ = QLineEdit()
+        self.pays_comp_champ.setFixedWidth(200)
+        self.pays_comp_champ.setStyleSheet("margin-right: 10px;")
+        self.pays_comp.addWidget(self.pays_comp_label)
+        self.pays_comp.addWidget(self.pays_comp_champ)
+        
+        # Bandeau du Co2 et du champ d'ecriture du Co2
+        self.co2_vol = QHBoxLayout()
+        self.co2_vol_label = QLabel("Co2/vol :       ")
+        self.co2_vol_champ = QLineEdit()
+        self.co2_vol_champ.setFixedWidth(200)
+        self.co2_vol_champ.setStyleSheet("margin-right: 10px;")
+        self.co2_vol.addWidget(self.co2_vol_label)
+        self.co2_vol.addWidget(self.co2_vol_champ)
+        
+        # Bandeau du Nbr d'avions/j et du champ d'ecriture du Nbr d'avions par jours
+        self.nb_avions = QHBoxLayout()
+        self.nb_avions_label = QLabel("Nb avions/j : ")
+        self.nb_avions_champ = QLineEdit()
+        self.nb_avions_champ.setFixedWidth(200)
+        self.nb_avions_champ.setStyleSheet("margin-right: 10px;")
+        self.nb_avions.addWidget(self.nb_avions_label)
+        self.nb_avions.addWidget(self.nb_avions_champ)
+        
+        # Création des layout verticaux et horizontaux
+        layout_ver = QVBoxLayout()        
+        layout_ver.addWidget(self.info)
+        layout_ver.addLayout(self.nom_comp)
+        layout_ver.addLayout(self.pays_comp)
+        layout_ver.addLayout(self.co2_vol)
+        layout_ver.addLayout(self.nb_avions)
+        
+        # Ajouter un espace extensible
+        layout_ver.addStretch(1)
+        self.nom_comp.addStretch(1)
+        self.pays_comp.addStretch(1)
+        self.co2_vol.addStretch(1)
+        self.nb_avions.addStretch(1)
+        
+        # Setter du layout
+        self.setLayout(layout_ver)
+    
 
 class Interface(QWidget):
     def __init__(self):
@@ -101,13 +165,22 @@ class Interface(QWidget):
         # Création des instances des classes Listes_Pays et Liste_Compagnies
         self.listes_pays = Listes_Pays()
         self.liste_compagnies = Liste_Compagnies()
+        self.informations = Informations()
 
         # Affichage de l'interface
-        self.affichage = QHBoxLayout()
-        self.affichage.addWidget(self.listes_pays)
-        self.affichage.addWidget(self.liste_compagnies)
-                        
-        self.setLayout(self.affichage)
+        self.layout_principal = QVBoxLayout()
+        
+        self.layout_horizontal = QHBoxLayout()
+        self.layout_horizontal.addWidget(self.listes_pays)
+        self.layout_horizontal.addWidget(self.liste_compagnies)
+        
+        self.layout_principal.addLayout(self.layout_horizontal)
+        self.layout_principal.addWidget(self.informations)
+        
+        # Ajouter un espace extensible
+        self.layout_principal.addStretch(1)
+        
+        self.setLayout(self.layout_principal)
 
         self.show()
 
