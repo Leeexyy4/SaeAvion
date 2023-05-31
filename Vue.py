@@ -381,14 +381,6 @@ class Interface(QWidget):
         self.compagnie_deselect_all.clicked.connect(self.uncheck)
 
         self.compagnie.addWidget(self.nom_col1)
-        self.compagnie.addWidget(self.nom_comp1, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp2, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp3, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp4, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp5, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp6, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp7, alignment=Qt.AlignmentFlag.AlignTop)
-        self.compagnie.addWidget(self.nom_comp8, alignment=Qt.AlignmentFlag.AlignTop)
         self.compagnie.addWidget(self.compagnie_select_all)
         self.compagnie.addWidget(self.compagnie_deselect_all)
 
@@ -405,18 +397,12 @@ class Interface(QWidget):
         self.nom_pays1 = QCheckBox("NomPays", self)
         #place les QCheckBox nom_pays1 un peu plus haut
         self.nom_pays1.setStyleSheet("padding-top: 10px;")
-        self.nom_pays2 = QCheckBox("NomPays", self)
-        self.nom_pays3 = QCheckBox("NomPays", self)
-        self.nom_pays4 = QCheckBox("NomPays", self)
         self.pays_select_all = QPushButton("select all")
         self.pays_deselect_all = QPushButton("deselect all")
         
         self.pays.addWidget(self.nom_col2)
         self.nom_col2.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.pays.addWidget(self.nom_pays1, alignment=Qt.AlignmentFlag.AlignTop)
-        self.pays.addWidget(self.nom_pays2, alignment=Qt.AlignmentFlag.AlignTop)
-        self.pays.addWidget(self.nom_pays3, alignment=Qt.AlignmentFlag.AlignTop)
-        self.pays.addWidget(self.nom_pays4, alignment=Qt.AlignmentFlag.AlignTop)
         self.pays.addWidget(self.pays_select_all)
         self.pays.addWidget(self.pays_deselect_all)
         
