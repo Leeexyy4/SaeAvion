@@ -4,6 +4,7 @@ import psycopg2
 from Controlleur_Arno import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
+from PyQt6.QtGui import QIcon
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
@@ -201,8 +202,9 @@ class Interface(QWidget):
         self.graphique.addWidget(self.nom_col4)
         self.graphique.addWidget(self.attend)
         
-        
-        
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("./Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
         
         self.affichage = QHBoxLayout()
         self.affichage.addLayout(self.combobox.layout)
