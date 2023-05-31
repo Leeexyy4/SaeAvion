@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 
@@ -131,6 +131,24 @@ class Informations(QWidget):
         self.nb_avions.addWidget(self.nb_avions_label)
         self.nb_avions.addWidget(self.nb_avions_champ)
         
+        # Bandeau du Nb de places et du champ d'ecriture du Nb de places
+        self.nb_places = QHBoxLayout()
+        self.nb_places_label = QLabel("Nb places :   ")
+        self.nb_places_champ = QLineEdit()
+        self.nb_places_champ.setFixedWidth(200)
+        self.nb_places_champ.setStyleSheet("margin-right: 10px;")
+        self.nb_places.addWidget(self.nb_places_label)
+        self.nb_places.addWidget(self.nb_places_champ)
+        
+        # Widget textedit Histoire compagnie : 
+        self.histoire_comp = QVBoxLayout()
+        self.histoire_comp_label = QLabel("Histoire compagnie : ")
+        self.histoire_comp_champ = QTextEdit()
+        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
+        self.histoire_comp_champ.setMaximumSize(265,200)
+        self.histoire_comp.addWidget(self.histoire_comp_label)
+        self.histoire_comp.addWidget(self.histoire_comp_champ)
+        
         # Création des layout verticaux et horizontaux
         layout_ver = QVBoxLayout()        
         layout_ver.addWidget(self.info)
@@ -138,6 +156,8 @@ class Informations(QWidget):
         layout_ver.addLayout(self.pays_comp)
         layout_ver.addLayout(self.co2_vol)
         layout_ver.addLayout(self.nb_avions)
+        layout_ver.addLayout(self.nb_places)
+        layout_ver.addLayout(self.histoire_comp)
         
         # Ajouter un espace extensible
         layout_ver.addStretch(1)
@@ -145,6 +165,7 @@ class Informations(QWidget):
         self.pays_comp.addStretch(1)
         self.co2_vol.addStretch(1)
         self.nb_avions.addStretch(1)
+        self.nb_places.addStretch(1)
         
         # Setter du layout
         self.setLayout(layout_ver)
