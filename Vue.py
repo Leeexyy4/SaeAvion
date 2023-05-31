@@ -98,7 +98,6 @@ class Infos_Pays(QVBoxLayout) :
         self.envoiCommande.emit(self.requete_sql)
 
 class Listes_Pays(QWidget):
-    #coucou
     
     def __init__(self) -> None:
         super().__init__()
@@ -357,10 +356,24 @@ class Listes_Pays(QWidget):
         self.combo_total.addItem("Zimbabwe")
 
 
-        self.layout = QHBoxLayout()
-        self.layout.addWidget(self.combo_total)
+        self.layout1 = QHBoxLayout()
+        self.layout1.addWidget(self.combo_total)
         
+class Liste_Compagnies(QWidget):
 
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.combo_total = QComboBox()
+        self.combo_total.addItem("1-2-go")
+        self.combo_total.addItem("12 North")
+        self.combo_total.addItem("135 Airways")
+        self.combo_total.addItem("1Time Airline")
+        
+        self.layout2 = QHBoxLayout()
+        self.layout2.addWidget(self.combo_total)
+        
+        
 class Interface(QWidget):
 
     #signaux
@@ -383,9 +396,6 @@ class Interface(QWidget):
         self.compagnie.addWidget(self.nom_col1)
         self.compagnie.addWidget(self.compagnie_select_all)
         self.compagnie.addWidget(self.compagnie_deselect_all)
-
-
-
 
         # Colonne Pays
         self.pays = QVBoxLayout()
@@ -424,7 +434,8 @@ class Interface(QWidget):
         self.setWindowIcon(self.iconeFenetre)
         
         self.affichage = QHBoxLayout()
-        self.affichage.addLayout(self.combobox.layout)
+        self.affichage.addLayout(self.combobox.layout1)
+        self.affichage.addLayout(self.combobox.layout2)
         self.affichage.addLayout(self.compagnie)
         self.affichage.addLayout(self.pays)
         self.affichage.addLayout(self.infos_pays)
