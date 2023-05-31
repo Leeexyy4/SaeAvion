@@ -1,6 +1,7 @@
 import sys
+import typing
 import psycopg2
-from test_requete import *
+from Controlleur import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -92,8 +93,21 @@ class Infos_Pays(QVBoxLayout) :
         self.addLayout(self.histoire_comp)
 
     def send(self):
-        self.requete_sql = "SELECT * FROM pays WHERE pays_nom ILIKE "+ self.table_pays[0]
+        self.requete_sql = "SELECT latitude, longitude FROM aeroport WHERE type LIKE 'airport' AND pays_id=(SELECT pays_id FROM pays WHERE pays_nom ILIKE "+ self.table_pays[0]+ ")"
         self.envoiCommande.emit(self.requete_sql)
+
+class Listes_Pays(QWidget):
+    
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.combo_total = QComboBox()
+        self.combo_total.addItem("Arabie Saoudite")
+        self.combo_total.addItem("Kirguistan")
+        self.combo_total.addItem("France")
+
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(self.combo_total)
         
 
 class Interface(QWidget):
@@ -117,6 +131,7 @@ class Interface(QWidget):
         self.nom_comp2.clicked.connect(lambda: self.changeTableSQL(self.nom_comp2))
         # self.nom_comp2.setStyleSheet("background-color: rgb(200, 200, 200);padding: 20px;")
         self.nom_comp3 = QCheckBox("Etats-Unis", self)
+        self.nom_comp3.clicked.connect(lambda: self.changeTableSQL(self.nom_comp3))
         # self.nom_comp3.setStyleSheet("background-color: rgb(200, 200, 200);padding: 20px;")
         self.nom_comp4 = QCheckBox("NomComp", self)
         # self.nom_comp4.setStyleSheet("background-color: rgb(200, 200, 200);padding: 20px;")
@@ -174,6 +189,7 @@ class Interface(QWidget):
         self.pays.addWidget(self.pays_deselect_all)
         
         self.infos_pays = Infos_Pays()
+        self.combobox = Listes_Pays()
         
         
         # Colonne Graphique
@@ -189,6 +205,7 @@ class Interface(QWidget):
         
         
         self.affichage = QHBoxLayout()
+        self.affichage.addLayout(self.combobox.layout)
         self.affichage.addLayout(self.compagnie)
         self.affichage.addLayout(self.pays)
         self.affichage.addLayout(self.infos_pays)
