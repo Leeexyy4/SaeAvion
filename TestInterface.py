@@ -95,7 +95,7 @@ class Informations(QWidget):
         
         # Bandeau du nom de la compagnie et du champ d'écriture du nom
         self.nom_comp = QHBoxLayout()
-        self.nom_comp_label = QLabel("     Nom :   ")
+        self.nom_comp_label = QLabel("Nom :   ")
         self.nom_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.nom_comp_champ = QLineEdit()
         self.nom_comp_champ.setFixedWidth(200)
@@ -105,7 +105,7 @@ class Informations(QWidget):
         
         # Bandeau du pays et du champ d'écriture du pays
         self.pays_comp = QHBoxLayout()
-        self.pays_comp_label = QLabel("     Pays :    ")
+        self.pays_comp_label = QLabel("Pays :    ")
         self.pays_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.pays_comp_champ = QLineEdit()
         self.pays_comp_champ.setFixedWidth(200)
@@ -115,7 +115,7 @@ class Informations(QWidget):
         
         # Bandeau du Co2 et du champ d'ecriture du Co2
         self.co2_vol = QHBoxLayout()
-        self.co2_vol_label = QLabel("     Co2/vol :       ")
+        self.co2_vol_label = QLabel("Co2/vol :       ")
         self.co2_vol_champ = QLineEdit()
         self.co2_vol_champ.setFixedWidth(200)
         self.co2_vol_champ.setStyleSheet("margin-right: 10px;")
@@ -124,7 +124,7 @@ class Informations(QWidget):
         
         # Bandeau du Nbr d'avions/j et du champ d'ecriture du Nbr d'avions par jours
         self.nb_avions = QHBoxLayout()
-        self.nb_avions_label = QLabel("     Nb avions/j : ")
+        self.nb_avions_label = QLabel("Nb avions/j : ")
         self.nb_avions_champ = QLineEdit()
         self.nb_avions_champ.setFixedWidth(200)
         self.nb_avions_champ.setStyleSheet("margin-right: 10px;")
@@ -133,7 +133,7 @@ class Informations(QWidget):
         
         # Bandeau du Nb de places et du champ d'ecriture du Nb de places
         self.nb_places = QHBoxLayout()
-        self.nb_places_label = QLabel("     Nb places :   ")
+        self.nb_places_label = QLabel("Nb places :   ")
         self.nb_places_champ = QLineEdit()
         self.nb_places_champ.setFixedWidth(200)
         self.nb_places_champ.setStyleSheet("margin-right: 10px;")
