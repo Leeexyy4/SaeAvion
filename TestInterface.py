@@ -140,15 +140,6 @@ class Informations(QWidget):
         self.nb_places.addWidget(self.nb_places_label)
         self.nb_places.addWidget(self.nb_places_champ)
         
-        # Widget textedit Histoire compagnie : 
-        self.histoire_comp = QVBoxLayout()
-        self.histoire_comp_label = QLabel("Histoire compagnie : ")
-        self.histoire_comp_champ = QTextEdit()
-        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
-        self.histoire_comp_champ.setMaximumSize(265,200)
-        self.histoire_comp.addWidget(self.histoire_comp_label)
-        self.histoire_comp.addWidget(self.histoire_comp_champ)
-        
         # Création du layout verticaux
         layout_ver = QVBoxLayout()        
         layout_ver.addWidget(self.info)
@@ -157,7 +148,6 @@ class Informations(QWidget):
         layout_ver.addLayout(self.co2_vol)
         layout_ver.addLayout(self.nb_avions)
         layout_ver.addLayout(self.nb_places)
-        layout_ver.addLayout(self.histoire_comp)
         
         # Ajouter un espace extensible
         layout_ver.addStretch(1)
@@ -209,6 +199,20 @@ class Footer(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
 
+class Graphique(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.histoire_comp = QVBoxLayout()
+        self.histoire_comp_label = QLabel("Graphique de la requete : ")
+        self.histoire_comp_champ = QTextEdit()
+        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
+
+        self.histoire_comp.addWidget(self.histoire_comp_label)
+        self.histoire_comp.addWidget(self.histoire_comp_champ)
+        
+        self.setLayout(self.histoire_comp)
+        
+
 class Interface(QWidget):
 
     #signaux
@@ -231,24 +235,31 @@ class Interface(QWidget):
         self.informations = Informations()
         self.footer = Footer()
         self.image = Image('Logo.png')
+        self.graphique = Graphique()
 
         # Affichage de l'interface
-        self.layout_principal = QVBoxLayout()
-        self.layout_horizontal = QHBoxLayout()
+        self.layout_vertical1 = QVBoxLayout()
+        self.layout_horizontal1 = QHBoxLayout()
+        self.layout_horizontal2 = QHBoxLayout()
+        self.layout_horizontal3 = QHBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal.addWidget(self.listes_pays)
-        self.layout_horizontal.addWidget(self.liste_compagnies)
+        self.layout_horizontal1.addWidget(self.listes_pays)
+        self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_vertical1.addLayout(self.layout_horizontal1)
         
-        self.layout_principal.addLayout(self.layout_horizontal)
-        self.layout_principal.addWidget(self.image)
-        self.layout_principal.addWidget(self.informations)
-        self.layout_principal.addWidget(self.footer)
+        self.layout_horizontal2.addWidget(self.image)
+        self.layout_horizontal2.addWidget(self.informations)
+        self.layout_horizontal2.addWidget(self.graphique)
+        self.layout_vertical1.addLayout(self.layout_horizontal2)
+        
+        self.layout_horizontal3.addWidget(self.footer)
+        self.layout_vertical1.addLayout(self.layout_horizontal3)
         
         # Ajouter un espace extensible
-        self.layout_principal.addStretch(1)
+        self.layout_vertical1.addStretch(1)
         
-        self.setLayout(self.layout_principal)
+        self.setLayout(self.layout_vertical1)
 
         self.show()
 
