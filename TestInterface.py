@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
 
 # Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
 class Listes_Pays(QWidget):
@@ -149,7 +149,7 @@ class Informations(QWidget):
         self.histoire_comp.addWidget(self.histoire_comp_label)
         self.histoire_comp.addWidget(self.histoire_comp_champ)
         
-        # Création des layout verticaux et horizontaux
+        # Création du layout verticaux
         layout_ver = QVBoxLayout()        
         layout_ver.addWidget(self.info)
         layout_ver.addLayout(self.nom_comp)
@@ -170,13 +170,51 @@ class Informations(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
     
+class Image(QWidget):
+    def __init__(self, image_path):
+        super().__init__()
+
+        # Création du layout vertical
+        layout_ver = QHBoxLayout()
+
+        # Chargement de l'image à l'aide du chemin fourni
+        self.image = QLabel()
+        pixmap = QPixmap(image_path)
+        pixmap = pixmap.scaled(90,90)
+        self.image.setPixmap(pixmap)
+        layout_ver.addWidget(self.image)
+
+        # Setter du layout
+        self.setLayout(layout_ver)
+
+class Footer(QWidget):
+    def __init__(self):
+        super().__init__()
+        
+        # Creation du layout vertical
+        layout_ver = QHBoxLayout()       
+         
+        # Bouton requete
+        self.precedent = QPushButton("Precedent")
+        layout_ver.addWidget(self.precedent)
+
+        # Bouton requete
+        self.requete = QPushButton("Requete")
+        layout_ver.addWidget(self.requete)
+        
+        # Bouton requete
+        self.suivant = QPushButton("Suivant")
+        layout_ver.addWidget(self.suivant)
+                
+        # Setter du layout
+        self.setLayout(layout_ver)
 
 class Interface(QWidget):
     def __init__(self):
         super().__init__()
         
         # Caractéristique de la fenetre de l'interface
-        self.resize(800, 600)
+        self.resize(800, 400)
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -187,16 +225,21 @@ class Interface(QWidget):
         self.listes_pays = Listes_Pays()
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
+        self.footer = Footer()
+        self.image = Image('Logo.png')
 
         # Affichage de l'interface
         self.layout_principal = QVBoxLayout()
-        
         self.layout_horizontal = QHBoxLayout()
+        
+        # Ajout des widgets
         self.layout_horizontal.addWidget(self.listes_pays)
         self.layout_horizontal.addWidget(self.liste_compagnies)
         
         self.layout_principal.addLayout(self.layout_horizontal)
+        self.layout_principal.addWidget(self.image)
         self.layout_principal.addWidget(self.informations)
+        self.layout_principal.addWidget(self.footer)
         
         # Ajouter un espace extensible
         self.layout_principal.addStretch(1)
