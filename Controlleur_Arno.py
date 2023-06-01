@@ -1,4 +1,4 @@
-import sys, Vue
+import sys, TestInterface
 import psycopg2
 import matplotlib.pyplot as plt
 from Controlleur_Arno import *
@@ -15,13 +15,6 @@ class Controller():
         self.DB_HOST = "172.25.176.1"
         self.DB_PORT = "5432"
 
-        self.vue = Vue.Interface()
-
-        self.vue.infos_pays.envoiCommande.connect(self.Commande)
- 
-    def Commande(self, requete):
-
-        print(requete)
 
         try:
             conn = psycopg2.connect(database=self.DB_NAME,
@@ -33,15 +26,22 @@ class Controller():
         except:
             print("Database not connected successfully")
 
-        cur = conn.cursor()
+        self.cur = conn.cursor()
 
+        self.vue = TestInterface.Interface()
 
+        #self.vue.infos_pays.envoiCommande.connect(self.Commande)
+        self.ajoutComboBox()
+ 
+    def Commande(self, requete):
+
+        print(requete)
         #cur.execute("SELECT COUNT(aeroport_id) FROM routes r, aeroport a, pays p WHERE r.aeroport_arr_id=a.aeroport_id AND p.pays_id = a.pays_id AND pays_nom ILIKE 'germany'")
         #cur.execute(requete)
-        cur.execute(requete)
+        self.cur.execute(requete)
 
         
-        rows = cur.fetchall()
+        rows = self.cur.fetchall()
 
         points_x = []
         points_y = []
@@ -52,6 +52,23 @@ class Controller():
 
         plt.scatter(points_x, points_y)
         plt.show()
+
+    def ajoutComboBox(self):
+
+        self.cur.execute("SELECT compagnie_nom FROM compagnie")
+        print("e")
+
+        rows = self.cur.fetchall()
+
+        for i in rows:
+            self.vue.liste_compagnies.combo_total.addItem(i[0])
+
+        self.cur.execute("SELECT pays_nom FROM pays")
+
+        rows = self.cur.fetchall()
+
+        for i in rows:
+            self.vue.listes_pays.combo_total.addItem(i[0])
 
 if __name__ == "__main__":
     print(f'main')

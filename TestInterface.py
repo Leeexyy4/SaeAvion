@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap
 
 # Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
@@ -45,6 +45,10 @@ class Listes_Pays(QWidget):
         
 # Classe Liste_compagnies qui reprend le bandeau déroulant des compagnies et le texte associé
 class Liste_Compagnies(QWidget):
+    #signaux
+
+    ajouteSTP = pyqtSignal()
+
     def __init__(self) -> None:
         super().__init__()
         
@@ -55,10 +59,6 @@ class Liste_Compagnies(QWidget):
         
         # Création de la combobox des compagnies
         self.combo_total = QComboBox()
-        self.combo_total.addItem("1-2-go")
-        self.combo_total.addItem("12 North")
-        self.combo_total.addItem("135 Airways")
-        self.combo_total.addItem("1Time Airline")
 
         # Ajout du select all
         self.selectall = QCheckBox("Select All")
@@ -210,6 +210,10 @@ class Footer(QWidget):
         self.setLayout(layout_ver)
 
 class Interface(QWidget):
+
+    #signaux
+
+    envoiCommande = pyqtSignal(str)
     def __init__(self):
         super().__init__()
         
