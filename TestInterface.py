@@ -218,7 +218,7 @@ class Interface(QWidget):
         super().__init__()
         
         # Caractéristique de la fenetre de l'interface
-        self.resize(800, 400)
+        self.resize(1200, 750)
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -242,18 +242,16 @@ class Interface(QWidget):
         # Ajout des widgets
         self.layout_horizontal1.addWidget(self.listes_pays)
         self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_horizontal1.addWidget(self.graphique)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
         self.layout_horizontal2.addWidget(self.image)
         self.layout_horizontal2.addWidget(self.informations)
-        self.layout_horizontal2.addWidget(self.graphique)
+        self.layout_vertical1.stretch(1)
         self.layout_vertical1.addLayout(self.layout_horizontal2)
         
         self.layout_horizontal3.addWidget(self.footer)
         self.layout_vertical1.addLayout(self.layout_horizontal3)
-        
-        # Ajouter un espace extensible
-        self.layout_vertical1.addStretch(1)
         
         self.setLayout(self.layout_vertical1)
 
