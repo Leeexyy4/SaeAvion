@@ -95,7 +95,7 @@ class Informations(QWidget):
         
         # Bandeau du nom de la compagnie et du champ d'écriture du nom
         self.nom_comp = QHBoxLayout()
-        self.nom_comp_label = QLabel("Nom :   ")
+        self.nom_comp_label = QLabel("     Nom :   ")
         self.nom_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.nom_comp_champ = QLineEdit()
         self.nom_comp_champ.setFixedWidth(200)
@@ -105,7 +105,7 @@ class Informations(QWidget):
         
         # Bandeau du pays et du champ d'écriture du pays
         self.pays_comp = QHBoxLayout()
-        self.pays_comp_label = QLabel("Pays :    ")
+        self.pays_comp_label = QLabel("     Pays :    ")
         self.pays_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.pays_comp_champ = QLineEdit()
         self.pays_comp_champ.setFixedWidth(200)
@@ -115,7 +115,7 @@ class Informations(QWidget):
         
         # Bandeau du Co2 et du champ d'ecriture du Co2
         self.co2_vol = QHBoxLayout()
-        self.co2_vol_label = QLabel("Co2/vol :       ")
+        self.co2_vol_label = QLabel("     Co2/vol :       ")
         self.co2_vol_champ = QLineEdit()
         self.co2_vol_champ.setFixedWidth(200)
         self.co2_vol_champ.setStyleSheet("margin-right: 10px;")
@@ -124,7 +124,7 @@ class Informations(QWidget):
         
         # Bandeau du Nbr d'avions/j et du champ d'ecriture du Nbr d'avions par jours
         self.nb_avions = QHBoxLayout()
-        self.nb_avions_label = QLabel("Nb avions/j : ")
+        self.nb_avions_label = QLabel("     Nb avions/j : ")
         self.nb_avions_champ = QLineEdit()
         self.nb_avions_champ.setFixedWidth(200)
         self.nb_avions_champ.setStyleSheet("margin-right: 10px;")
@@ -133,21 +133,12 @@ class Informations(QWidget):
         
         # Bandeau du Nb de places et du champ d'ecriture du Nb de places
         self.nb_places = QHBoxLayout()
-        self.nb_places_label = QLabel("Nb places :   ")
+        self.nb_places_label = QLabel("     Nb places :   ")
         self.nb_places_champ = QLineEdit()
         self.nb_places_champ.setFixedWidth(200)
         self.nb_places_champ.setStyleSheet("margin-right: 10px;")
         self.nb_places.addWidget(self.nb_places_label)
         self.nb_places.addWidget(self.nb_places_champ)
-        
-        # Widget textedit Histoire compagnie : 
-        self.histoire_comp = QVBoxLayout()
-        self.histoire_comp_label = QLabel("Histoire compagnie : ")
-        self.histoire_comp_champ = QTextEdit()
-        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
-        self.histoire_comp_champ.setMaximumSize(265,200)
-        self.histoire_comp.addWidget(self.histoire_comp_label)
-        self.histoire_comp.addWidget(self.histoire_comp_champ)
         
         # Création du layout verticaux
         layout_ver = QVBoxLayout()        
@@ -157,7 +148,6 @@ class Informations(QWidget):
         layout_ver.addLayout(self.co2_vol)
         layout_ver.addLayout(self.nb_avions)
         layout_ver.addLayout(self.nb_places)
-        layout_ver.addLayout(self.histoire_comp)
         
         # Ajouter un espace extensible
         layout_ver.addStretch(1)
@@ -209,6 +199,20 @@ class Footer(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
 
+class Graphique(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.histoire_comp = QVBoxLayout()
+        self.histoire_comp_label = QLabel("Graphique de la requete : ")
+        self.histoire_comp_champ = QTextEdit()
+        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
+
+        self.histoire_comp.addWidget(self.histoire_comp_label)
+        self.histoire_comp.addWidget(self.histoire_comp_champ)
+        
+        self.setLayout(self.histoire_comp)
+        
+
 class Interface(QWidget):
     def __init__(self):
         super().__init__()
@@ -227,6 +231,7 @@ class Interface(QWidget):
         self.informations = Informations()
         self.footer = Footer()
         self.image = Image('Logo.png')
+        self.graphique = Graphique()
 
         # Affichage de l'interface
         self.layout_vertical1 = QVBoxLayout()
@@ -241,6 +246,7 @@ class Interface(QWidget):
         
         self.layout_horizontal2.addWidget(self.image)
         self.layout_horizontal2.addWidget(self.informations)
+        self.layout_horizontal2.addWidget(self.graphique)
         self.layout_vertical1.addLayout(self.layout_horizontal2)
         
         self.layout_horizontal3.addWidget(self.footer)
