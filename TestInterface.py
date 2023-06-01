@@ -229,22 +229,27 @@ class Interface(QWidget):
         self.image = Image('Logo.png')
 
         # Affichage de l'interface
-        self.layout_principal = QVBoxLayout()
-        self.layout_horizontal = QHBoxLayout()
+        self.layout_vertical1 = QVBoxLayout()
+        self.layout_horizontal1 = QHBoxLayout()
+        self.layout_horizontal2 = QHBoxLayout()
+        self.layout_horizontal3 = QHBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal.addWidget(self.listes_pays)
-        self.layout_horizontal.addWidget(self.liste_compagnies)
+        self.layout_horizontal1.addWidget(self.listes_pays)
+        self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_vertical1.addLayout(self.layout_horizontal1)
         
-        self.layout_principal.addLayout(self.layout_horizontal)
-        self.layout_principal.addWidget(self.image)
-        self.layout_principal.addWidget(self.informations)
-        self.layout_principal.addWidget(self.footer)
+        self.layout_horizontal2.addWidget(self.image)
+        self.layout_horizontal2.addWidget(self.informations)
+        self.layout_vertical1.addLayout(self.layout_horizontal2)
+        
+        self.layout_horizontal3.addWidget(self.footer)
+        self.layout_vertical1.addLayout(self.layout_horizontal3)
         
         # Ajouter un espace extensible
-        self.layout_principal.addStretch(1)
+        self.layout_vertical1.addStretch(1)
         
-        self.setLayout(self.layout_principal)
+        self.setLayout(self.layout_vertical1)
 
         self.show()
 
