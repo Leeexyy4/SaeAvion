@@ -135,6 +135,17 @@ class Informations(QWidget):
         self.nb_places.addWidget(self.nb_places_label)
         self.nb_places.addWidget(self.nb_places_champ)
         
+        # Bandeau de la requete
+        self.requete = QVBoxLayout()
+        self.requete_label = QLabel("Requete utilisateur : ")
+        self.requete_champ = QTextEdit()
+        self.requete_champ.setStyleSheet("margin-bottom: 30px;")
+
+        self.requete.addWidget(self.requete_label)
+        self.requete.addWidget(self.requete_champ)
+        
+        self.setLayout(self.requete)
+        
         # Création du layout verticaux
         layout_ver = QVBoxLayout()        
         layout_ver.addWidget(self.info)
@@ -165,9 +176,10 @@ class Image(QWidget):
         # Chargement de l'image à l'aide du chemin fourni
         self.image = QLabel()
         pixmap = QPixmap(image_path)
-        pixmap = pixmap.scaled(120,120)
+        pixmap = pixmap.scaled(120,300)
         self.image.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.image.setPixmap(pixmap)
+        self.image.setStyleSheet("background-color: yellow;")
         layout_ver.addWidget(self.image)
 
         # Setter du layout
@@ -198,15 +210,15 @@ class Footer(QWidget):
 class Graphique(QWidget):
     def __init__(self):
         super().__init__()
-        self.histoire_comp = QVBoxLayout()
-        self.histoire_comp_label = QLabel("Graphique de la requete : ")
-        self.histoire_comp_champ = QTextEdit()
-        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
+        self.graphique = QVBoxLayout()
+        self.graphique_label = QLabel("Graphique de la requete : ")
+        self.graphique_champ = QTextEdit()
+        self.graphique_champ.setStyleSheet("margin-bottom: 30px;")
 
-        self.histoire_comp.addWidget(self.histoire_comp_label)
-        self.histoire_comp.addWidget(self.histoire_comp_champ)
+        self.graphique.addWidget(self.graphique_label)
+        self.graphique.addWidget(self.graphique_champ)
         
-        self.setLayout(self.histoire_comp)
+        self.setLayout(self.graphique)
         
 
 class Interface(QWidget):
@@ -226,26 +238,28 @@ class Interface(QWidget):
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
         self.footer = Footer()
-        self.image = Image('Logo.png')
+        self.image = Image('Logo OASIX.png')
         self.graphique = Graphique()
 
         # Affichage de l'interface
         self.layout_vertical1 = QVBoxLayout()
+        self.layout_vertical2 = QVBoxLayout()
         self.layout_horizontal1 = QHBoxLayout()
         self.layout_horizontal2 = QHBoxLayout()
         self.layout_horizontal3 = QHBoxLayout()
-        self.layout_horizontal4 = QVBoxLayout()
+        self.layout_horizontal4 = QHBoxLayout()
         
         # Ajout des widgets
         self.layout_horizontal4.addWidget(self.listes_pays)
-        self.layout_horizontal4.addWidget(self.informations)
+        self.layout_horizontal4.addWidget(self.liste_compagnies)
+        self.layout_horizontal4.addWidget(self.graphique)
         self.layout_horizontal4.stretch(1)
-        self.layout_horizontal1.addLayout(self.layout_horizontal4)
-        self.layout_horizontal1.addWidget(self.liste_compagnies)
-        self.layout_horizontal1.addWidget(self.graphique)
+        self.layout_vertical1.addLayout(self.layout_horizontal4)
+        
+        self.layout_horizontal1.addWidget(self.image)
+        self.layout_horizontal1.addWidget(self.informations)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
-        self.layout_horizontal2.addWidget(self.image)
         self.layout_horizontal2.addWidget(self.informations)
         self.layout_vertical1.addLayout(self.layout_horizontal2)
 
