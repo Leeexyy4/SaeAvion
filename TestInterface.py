@@ -99,7 +99,6 @@ class Informations(QWidget):
         self.nom_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.nom_comp_champ = QLineEdit()
         self.nom_comp_champ.setFixedWidth(200)
-        self.nom_comp_champ.setStyleSheet("margin-right: 10px;")
         self.nom_comp.addWidget(self.nom_comp_label)
         self.nom_comp.addWidget(self.nom_comp_champ)
         
@@ -109,7 +108,6 @@ class Informations(QWidget):
         self.pays_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
         self.pays_comp_champ = QLineEdit()
         self.pays_comp_champ.setFixedWidth(200)
-        self.pays_comp_champ.setStyleSheet("margin-right: 10px;")
         self.pays_comp.addWidget(self.pays_comp_label)
         self.pays_comp.addWidget(self.pays_comp_champ)
         
@@ -118,7 +116,6 @@ class Informations(QWidget):
         self.co2_vol_label = QLabel("Co2/vol :       ")
         self.co2_vol_champ = QLineEdit()
         self.co2_vol_champ.setFixedWidth(200)
-        self.co2_vol_champ.setStyleSheet("margin-right: 10px;")
         self.co2_vol.addWidget(self.co2_vol_label)
         self.co2_vol.addWidget(self.co2_vol_champ)
         
@@ -127,7 +124,6 @@ class Informations(QWidget):
         self.nb_avions_label = QLabel("Nb avions/j : ")
         self.nb_avions_champ = QLineEdit()
         self.nb_avions_champ.setFixedWidth(200)
-        self.nb_avions_champ.setStyleSheet("margin-right: 10px;")
         self.nb_avions.addWidget(self.nb_avions_label)
         self.nb_avions.addWidget(self.nb_avions_champ)
         
@@ -136,7 +132,6 @@ class Informations(QWidget):
         self.nb_places_label = QLabel("Nb places :   ")
         self.nb_places_champ = QLineEdit()
         self.nb_places_champ.setFixedWidth(200)
-        self.nb_places_champ.setStyleSheet("margin-right: 10px;")
         self.nb_places.addWidget(self.nb_places_label)
         self.nb_places.addWidget(self.nb_places_champ)
         
@@ -170,7 +165,8 @@ class Image(QWidget):
         # Chargement de l'image à l'aide du chemin fourni
         self.image = QLabel()
         pixmap = QPixmap(image_path)
-        pixmap = pixmap.scaled(90,90)
+        pixmap = pixmap.scaled(120,120)
+        self.image.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.image.setPixmap(pixmap)
         layout_ver.addWidget(self.image)
 
@@ -218,7 +214,7 @@ class Interface(QWidget):
         super().__init__()
         
         # Caractéristique de la fenetre de l'interface
-        self.resize(800, 400)
+        self.resize(1000, 800)
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -238,24 +234,26 @@ class Interface(QWidget):
         self.layout_horizontal1 = QHBoxLayout()
         self.layout_horizontal2 = QHBoxLayout()
         self.layout_horizontal3 = QHBoxLayout()
+        self.layout_horizontal4 = QVBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal1.addWidget(self.listes_pays)
+        self.layout_horizontal4.addWidget(self.listes_pays)
+        self.layout_horizontal4.addWidget(self.informations)
+        self.layout_horizontal4.stretch(1)
+        self.layout_horizontal1.addLayout(self.layout_horizontal4)
         self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_horizontal1.addWidget(self.graphique)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
         self.layout_horizontal2.addWidget(self.image)
         self.layout_horizontal2.addWidget(self.informations)
-        self.layout_horizontal2.addWidget(self.graphique)
         self.layout_vertical1.addLayout(self.layout_horizontal2)
-        
+
         self.layout_horizontal3.addWidget(self.footer)
         self.layout_vertical1.addLayout(self.layout_horizontal3)
         
-        # Ajouter un espace extensible
-        self.layout_vertical1.addStretch(1)
-        
         self.setLayout(self.layout_vertical1)
+        self.layout_vertical1.stretch(1)
 
         self.show()
 
