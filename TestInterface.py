@@ -15,10 +15,6 @@ class Listes_Pays(QWidget):
 
         # Création de la combobox des pays
         self.combo_total = QComboBox()
-        self.combo_total.addItem("Afghanistan")
-        self.combo_total.addItem("Albania")
-        self.combo_total.addItem("Algeria")
-        self.combo_total.addItem("American Samao")
         
         # Ajout du select all
         self.selectall = QCheckBox("Select All")

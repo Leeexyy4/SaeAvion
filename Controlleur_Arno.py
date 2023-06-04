@@ -55,7 +55,7 @@ class Controller():
 
     def ajoutComboBox(self):
 
-        self.cur.execute("SELECT compagnie_nom FROM compagnie")
+        self.cur.execute("SELECT compagnie_nom FROM compagnie ORDER BY compagnie_nom")
         print("e")
 
         rows = self.cur.fetchall()
@@ -63,7 +63,7 @@ class Controller():
         for i in rows:
             self.vue.liste_compagnies.combo_total.addItem(i[0])
 
-        self.cur.execute("SELECT pays_nom FROM pays")
+        self.cur.execute("SELECT pays_nom FROM pays ORDER BY pays_nom")
 
         rows = self.cur.fetchall()
 
