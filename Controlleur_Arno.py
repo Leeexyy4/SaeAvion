@@ -1,6 +1,7 @@
-import sys, TestInterface
+import sys, TestInterface, TestSecondeInterface
 import psycopg2
 import matplotlib.pyplot as plt
+import numpy as np
 from Controlleur_Arno import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
@@ -25,20 +26,27 @@ class Controller():
             print("Database connected successfully")
         except:
             print("Database not connected successfully")
+            sys.exit()
 
         self.cur = conn.cursor()
 
-        self.vue = TestInterface.Interface()
+        self.requeteSQL = ""
+        self.vue = TestSecondeInterface.Total()
 
-        #self.vue.infos_pays.envoiCommande.connect(self.Commande)
         self.ajoutComboBox()
- 
-    def Commande(self, requete):
+        self.vue.interf_1.liste_compagnies.resetCompRequete()
+        self.vue.interf_1.liste_pays.resetPaysRequete()
 
-        print(requete)
+        self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
+ 
+    def Commande(self):
+
+        self.fabriqueRequete()
+
+        print(self.requeteSQL)
         #cur.execute("SELECT COUNT(aeroport_id) FROM routes r, aeroport a, pays p WHERE r.aeroport_arr_id=a.aeroport_id AND p.pays_id = a.pays_id AND pays_nom ILIKE 'germany'")
         #cur.execute(requete)
-        self.cur.execute(requete)
+        self.cur.execute(self.requeteSQL)
 
         
         rows = self.cur.fetchall()
@@ -51,6 +59,13 @@ class Controller():
             points_y.append(d[0])
 
         plt.scatter(points_x, points_y)
+
+        # fig, ax = plt.subplots(1, figsize=(4, 4), dpi=300)
+        # ax.plot([1, 3, 5, 8, 4, 2])
+        # fig.canvas.draw()
+        # temp_canvas = fig.canvas
+        # plt.close()
+
         plt.show()
 
     def ajoutComboBox(self):
@@ -61,14 +76,28 @@ class Controller():
         rows = self.cur.fetchall()
 
         for i in rows:
-            self.vue.liste_compagnies.combo_total.addItem(i[0])
+            self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
         self.cur.execute("SELECT pays_nom FROM pays ORDER BY pays_nom")
 
         rows = self.cur.fetchall()
 
         for i in rows:
-            self.vue.listes_pays.combo_total.addItem(i[0])
+            self.vue.interf_1.liste_pays.combo_total.addItem(i[0])
+
+    def fabriqueRequete(self):
+        requetefinale = "SELECT pays_id FROM pays WHERE "
+        paysrequete = self.vue.liste_pays.pays_requete
+
+        if len(paysrequete)>1:
+            for p in range(len(paysrequete)-1):
+                requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "' OR "
+            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "'"
+
+        else:
+            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[0] + "'"
+        
+        self.requeteSQL = requetefinale
 
 if __name__ == "__main__":
     print(f'main')

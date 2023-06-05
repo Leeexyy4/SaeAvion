@@ -1,4 +1,6 @@
 import sys
+import typing
+from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap
@@ -235,7 +237,7 @@ class Graphique(QWidget):
         self.setLayout(self.histoire_comp)
         
 
-class Interface(QWidget):
+class Interface1(QWidget):
 
     #signaux
 
@@ -245,6 +247,7 @@ class Interface(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
+        self.setWindowTitle("Partie 1. :)")
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -285,9 +288,78 @@ class Interface(QWidget):
 
         self.show()
 
+class Interface2(QWidget):
+    
+    def __init__(self) -> None:
+
+        super().__init__()
+        
+        # Caractéristique de la fenetre de l'interface
+        self.resize(800, 400)
+        self.setWindowTitle("PARTIE 2 !!!!")
+
+        # Ajout de l'icone Oasix
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("./Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
+        
+        # Création des instances des classes Listes_Pays et Liste_Compagnies
+        self.liste_pays = Liste_Pays()
+        self.liste_compagnies = Liste_Compagnies()
+        self.informations = Informations()
+        self.footer = Footer()
+        self.image = Image('Logo.png')
+        self.graphique = Graphique()
+
+        # Affichage de l'interface
+        self.layout_vertical1 = QVBoxLayout()
+        self.layout_horizontal1 = QHBoxLayout()
+        self.layout_horizontal2 = QHBoxLayout()
+        self.layout_horizontal3 = QHBoxLayout()
+        
+        # Ajout des widgets
+        self.layout_horizontal1.addWidget(self.liste_pays)
+        self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_vertical1.addLayout(self.layout_horizontal1)
+        
+        self.layout_horizontal2.addWidget(self.image)
+        self.layout_horizontal2.addWidget(self.informations)
+        self.layout_horizontal2.addWidget(self.graphique)
+        self.layout_vertical1.addLayout(self.layout_horizontal2)
+        
+        self.layout_horizontal3.addWidget(self.footer)
+        self.layout_vertical1.addLayout(self.layout_horizontal3)
+        
+        # Ajouter un espace extensible
+        self.layout_vertical1.addStretch(1)
+        
+        self.setLayout(self.layout_vertical1)
+
+
+class Total(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        self.interf_1 = Interface1()
+        self.interf_2 = Interface2()
+
+        self.interf_1.footer.suivant.clicked.connect(self.changeFenetre)
+        self.interf_2.footer.suivant.clicked.connect(self.changeFenetre)
+
+    def changeFenetre(self):
+        if self.interf_2.isHidden() == True:
+            self.interf_1.hide()
+            self.interf_2.show()
+        else:
+            self.interf_2.hide()
+            self.interf_1.show()
+
+        
+
 
 if __name__ == "__main__":
     print(f'main')
     app = QApplication(sys.argv)
-    f = Interface()
+    f = Total()
     sys.exit(app.exec())
