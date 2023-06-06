@@ -1,4 +1,4 @@
-import sys, TestInterface, TestSecondeInterface
+import sys, TestSecondeInterface
 import psycopg2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +13,7 @@ class Controller():
         self.DB_NAME = "sae_bdd" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
         self.DB_USER = "wissocq"
         self.DB_PASS = "arnaudwq"
-        self.DB_HOST = "127.0.0.1"
+        self.DB_HOST = "172.25.176.1"
         self.DB_PORT = "5432"
 
 
@@ -33,11 +33,10 @@ class Controller():
         self.requeteSQL = ""
         self.vue = TestSecondeInterface.Total()
 
-        self.ajoutComboBox()
-        self.vue.interf_1.liste_compagnies.resetCompRequete()
-        self.vue.interf_1.liste_aero.resetAeroRequete()
+        self.ajoutComboBoxPays()
 
         self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
+        self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
  
     def Commande(self):
 
@@ -68,36 +67,42 @@ class Controller():
 
         plt.show()
 
-    def ajoutComboBox(self):
+    def ajoutComboBoxPays(self):
 
-        self.cur.execute("SELECT compagnie_nom FROM compagnie ORDER BY compagnie_nom")
+        self.cur.execute("SELECT pays_nom FROM pays ORDER BY pays_nom")
+
+        rows = self.cur.fetchall()
+
+        for i in rows:
+            self.vue.interf_1.liste_pays.combo_total.addItem(i[0])
+
+    def ajoutComboBoxComp(self, pays_comp:str):
+
+        self.vue.interf_1.liste_compagnies.combo_total.clear()
+        print('a')
+
+        requete = "SELECT compagnie_nom FROM compagnie WHERE pays_id=(SELECT pays_id FROM pays WHERE pays_nom ILIKE '" + pays_comp + "') ORDER BY compagnie_nom "
+
+        self.cur.execute(requete)
 
         rows = self.cur.fetchall()
 
         for i in rows:
             self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
-        self.cur.execute("SELECT aeroport_nom FROM aeroport ORDER BY aeroport_nom")
-
-        rows = self.cur.fetchall()
-
-        for i in rows:
-            self.vue.interf_1.liste_aero.combo_total.addItem(i[0])
-
     def fabriqueRequete(self):
-        requetefinale = "SELECT aeroport_id FROM aeroport WHERE "
-        aerorequete = self.vue.liste_aero.aero_requete
+        requetefinale = "SELECT pays_id FROM pays WHERE "
+        paysrequete = self.vue.liste_pays.pays_requete
 
-        if len(aerorequete)>1:
-            for p in range(len(aerorequete)-1):
-                requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[p] + "' OR "
-            requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[p] + "'"
+        if len(paysrequete)>1:
+            for p in range(len(paysrequete)-1):
+                requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "' OR "
+            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "'"
 
         else:
-            requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[0] + "'"
+            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[0] + "'"
         
         self.requeteSQL = requetefinale
-        print(self.requeteSQL)
 
 if __name__ == "__main__":
     print(f'main')

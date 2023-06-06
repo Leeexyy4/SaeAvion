@@ -5,35 +5,39 @@ from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBox
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap
 
-# Classe Liste_Aeroport qui reprend le bandeau déroulant de l'aeroport et le texte associé
-class Liste_Aeroport(QWidget):
+# Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
+class Liste_Pays(QWidget):
+    #signaux
+
+    paysChange = pyqtSignal(str)
+
     def __init__(self) -> None:
         super().__init__()
 
-        self.aero_requete = []
+        self.pays_actuel = ""
         
-        # Ajout des informations des aeroports
-        self.nom_aero = QLabel("Nom de l'aeroport")
-        self.nom_aero.setStyleSheet("padding-left: 100px;padding-right: 100px;")
-        self.nom_aero.setAlignment(Qt.AlignmentFlag.AlignTop)
+        # Ajout des informations des pays
+        self.nom_pays = QLabel("Nom du pays")
+        self.nom_pays.setStyleSheet("padding-left: 100px;padding-right: 100px;")
+        self.nom_pays.setAlignment(Qt.AlignmentFlag.AlignTop)
 
-        # Création de la combobox des aero
+        # Création de la combobox des pays
         self.combo_total = QComboBox()
-        self.combo_total.currentIndexChanged.connect(self.ajoutAeroRequete)
         
         # Ajout du select all
-        self.selectall = QCheckBox("Select All")
+        self.selectall = QPushButton("Ajouter Pays")
+        self.selectall.clicked.connect(self.changerCompRequete)
         
         # Ajout du deselect all
-        self.deselectall = QCheckBox("Deselect All")
-        self.deselectall.clicked.connect(self.resetAeroRequete)
+        self.deselectall = QPushButton("Reset Pays")
+        self.deselectall.clicked.connect(self.resetPaysRequete)
         
         # Création des layout verticaux et horizontaux
         layout_ver = QVBoxLayout()
         layout_hor = QHBoxLayout()
         
-        # Ajout des widgets aeroports
-        layout_ver.addWidget(self.nom_aero)
+        # Ajout des widgets pays
+        layout_ver.addWidget(self.nom_pays)
         layout_ver.addWidget(self.combo_total)
         layout_hor.addWidget(self.selectall)
         layout_hor.addWidget(self.deselectall)
@@ -45,14 +49,15 @@ class Liste_Aeroport(QWidget):
         # Setter du layout
         self.setLayout(layout_ver)
 
-    def ajoutAeroRequete(self):
-        self.aero_requete.append(self.combo_total.currentText())
-        print(self.aero_requete)
+    def changerCompRequete(self):
+        self.pays_actuel = self.combo_total.currentText()
+        print(self.pays_actuel)
+        self.paysChange.emit(self.pays_actuel)
 
     #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
-    def resetAeroRequete(self):
-        if self.deselectall.isChecked() == True:
-            self.aero_requete = []
+    def resetPaysRequete(self):
+        self.pays_requete = []
+        print(self.pays_requete)
         
 # Classe Liste_compagnies qui reprend le bandeau déroulant des compagnies et le texte associé
 class Liste_Compagnies(QWidget):
@@ -70,13 +75,13 @@ class Liste_Compagnies(QWidget):
         
         # Création de la combobox des compagnies
         self.combo_total = QComboBox()
-        self.combo_total.currentIndexChanged.connect(self.ajoutCompRequete)
 
         # Ajout du select all
-        self.selectall = QCheckBox("Select All")
+        self.selectall = QPushButton("Ajouter Compagnie")
+        self.selectall.clicked.connect(self.ajoutCompRequete)
         
         # Ajout du deselect all
-        self.deselectall = QCheckBox("Deselect All")
+        self.deselectall = QPushButton("Reset Compagnie")
         self.deselectall.clicked.connect(self.resetCompRequete)
         
         # Création des layout verticaux et horizontaux
@@ -97,12 +102,11 @@ class Liste_Compagnies(QWidget):
 
     def ajoutCompRequete(self):
         self.compagnie_requete.append(self.combo_total.currentText())
-        print(self.compagnie_requete)
+
 
     #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
     def resetCompRequete(self):
-        if self.deselectall.isChecked() == True:
-            self.compagnie_requete = []
+        self.compagnie_requete = []
         
 
 # Classe Informations qui reprend le logo et les informations
@@ -125,15 +129,15 @@ class Informations(QWidget):
         self.nom_comp.addWidget(self.nom_comp_label)
         self.nom_comp.addWidget(self.nom_comp_champ)
         
-        # Bandeau de l'aeroport et du champ d'écriture de l'aeroport
-        self.aero_comp = QHBoxLayout()
-        self.aero_comp_label = QLabel("Aeroport :    ")
-        self.aero_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
-        self.aero_comp_champ = QLineEdit()
-        self.aero_comp_champ.setFixedWidth(200)
-        self.aero_comp_champ.setStyleSheet("margin-right: 10px;")
-        self.aero_comp.addWidget(self.aero_comp_label)
-        self.aero_comp.addWidget(self.aero_comp_champ)
+        # Bandeau du pays et du champ d'écriture du pays
+        self.pays_comp = QHBoxLayout()
+        self.pays_comp_label = QLabel("Pays :    ")
+        self.pays_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
+        self.pays_comp_champ = QLineEdit()
+        self.pays_comp_champ.setFixedWidth(200)
+        self.pays_comp_champ.setStyleSheet("margin-right: 10px;")
+        self.pays_comp.addWidget(self.pays_comp_label)
+        self.pays_comp.addWidget(self.pays_comp_champ)
         
         # Bandeau du Co2 et du champ d'ecriture du Co2
         self.co2_vol = QHBoxLayout()
@@ -166,7 +170,7 @@ class Informations(QWidget):
         layout_ver = QVBoxLayout()        
         layout_ver.addWidget(self.info)
         layout_ver.addLayout(self.nom_comp)
-        layout_ver.addLayout(self.aero_comp)
+        layout_ver.addLayout(self.pays_comp)
         layout_ver.addLayout(self.co2_vol)
         layout_ver.addLayout(self.nb_avions)
         layout_ver.addLayout(self.nb_places)
@@ -174,7 +178,7 @@ class Informations(QWidget):
         # Ajouter un espace extensible
         layout_ver.addStretch(1)
         self.nom_comp.addStretch(1)
-        self.aero_comp.addStretch(1)
+        self.pays_comp.addStretch(1)
         self.co2_vol.addStretch(1)
         self.nb_avions.addStretch(1)
         self.nb_places.addStretch(1)
@@ -254,8 +258,8 @@ class Interface1(QWidget):
         self.iconeFenetre.addFile("./Logo.png")
         self.setWindowIcon(self.iconeFenetre)
         
-        # Création des instances des classes Listes_Aeroportet Liste_Compagnies
-        self.liste_aero = Liste_Aeroport()
+        # Création des instances des classes Listes_Pays et Liste_Compagnies
+        self.liste_pays = Liste_Pays()
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
         self.footer = Footer()
@@ -269,7 +273,7 @@ class Interface1(QWidget):
         self.layout_horizontal3 = QHBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal1.addWidget(self.liste_aero)
+        self.layout_horizontal1.addWidget(self.liste_pays)
         self.layout_horizontal1.addWidget(self.liste_compagnies)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
@@ -303,8 +307,8 @@ class Interface2(QWidget):
         self.iconeFenetre.addFile("./Logo.png")
         self.setWindowIcon(self.iconeFenetre)
         
-        # Création des instances des classes Listes_aero et Liste_Compagnies
-        self.liste_aero = Liste_Aeroport()
+        # Création des instances des classes Listes_Pays et Liste_Compagnies
+        self.liste_pays = Liste_Pays()
         self.liste_compagnies = Liste_Compagnies()
         self.footer = Footer()
         self.image = Image('Logo.png')
@@ -317,7 +321,7 @@ class Interface2(QWidget):
         self.layout_horizontal3 = QHBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal1.addWidget(self.liste_aero)
+        self.layout_horizontal1.addWidget(self.liste_pays)
         self.layout_horizontal1.addWidget(self.liste_compagnies)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
