@@ -1,4 +1,4 @@
-import sys, TestInterface, TestSecondeInterface
+import sys, TestSecondeInterface
 import psycopg2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,8 +11,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Controller():
     def __init__(self) -> None:
         self.DB_NAME = "sae_bdd" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
+        self.DB_USER = "crpsim"
+        self.DB_PASS = "simoncrp"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
@@ -86,7 +86,7 @@ class Controller():
 
     def fabriqueRequete(self):
         requetefinale = "SELECT aeroport_id FROM aeroport WHERE "
-        aerorequete = self.vue.liste_aero.aero_requete
+        aerorequete = self.vue.interf_1.liste_aero.aero_requete
 
         if len(aerorequete)>1:
             for p in range(len(aerorequete)-1):
