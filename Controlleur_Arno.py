@@ -10,10 +10,10 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Controller():
     def __init__(self) -> None:
-        self.DB_NAME = "SAE_BDD" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
+        self.DB_NAME = "sae_bdd" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
         self.DB_USER = "wissocq"
         self.DB_PASS = "arnaudwq"
-        self.DB_HOST = "172.25.176.1"
+        self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
 
@@ -35,7 +35,7 @@ class Controller():
 
         self.ajoutComboBox()
         self.vue.interf_1.liste_compagnies.resetCompRequete()
-        self.vue.interf_1.liste_pays.resetPaysRequete()
+        self.vue.interf_1.liste_aero.resetAeroRequete()
 
         self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
  
@@ -71,33 +71,33 @@ class Controller():
     def ajoutComboBox(self):
 
         self.cur.execute("SELECT compagnie_nom FROM compagnie ORDER BY compagnie_nom")
-        print("e")
 
         rows = self.cur.fetchall()
 
         for i in rows:
             self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
-        self.cur.execute("SELECT pays_nom FROM pays ORDER BY pays_nom")
+        self.cur.execute("SELECT aeroport_nom FROM aeroport ORDER BY aeroport_nom")
 
         rows = self.cur.fetchall()
 
         for i in rows:
-            self.vue.interf_1.liste_pays.combo_total.addItem(i[0])
+            self.vue.interf_1.liste_aero.combo_total.addItem(i[0])
 
     def fabriqueRequete(self):
-        requetefinale = "SELECT pays_id FROM pays WHERE "
-        paysrequete = self.vue.liste_pays.pays_requete
+        requetefinale = "SELECT aeroport_id FROM aeroport WHERE "
+        aerorequete = self.vue.liste_aero.aero_requete
 
-        if len(paysrequete)>1:
-            for p in range(len(paysrequete)-1):
-                requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "' OR "
-            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "'"
+        if len(aerorequete)>1:
+            for p in range(len(aerorequete)-1):
+                requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[p] + "' OR "
+            requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[p] + "'"
 
         else:
-            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[0] + "'"
+            requetefinale = requetefinale + "aeroport_nom LIKE '" + aerorequete[0] + "'"
         
         self.requeteSQL = requetefinale
+        print(self.requeteSQL)
 
 if __name__ == "__main__":
     print(f'main')

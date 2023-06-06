@@ -236,7 +236,6 @@ class Graphique(QWidget):
         
 
 class Interface(QWidget):
-
     #signaux
 
     envoiCommande = pyqtSignal(str)
