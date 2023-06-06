@@ -306,7 +306,6 @@ class Interface2(QWidget):
         # Création des instances des classes Listes_Pays et Liste_Compagnies
         self.liste_pays = Liste_Pays()
         self.liste_compagnies = Liste_Compagnies()
-        self.informations = Informations()
         self.footer = Footer()
         self.image = Image('Logo.png')
         self.graphique = Graphique()
@@ -323,7 +322,6 @@ class Interface2(QWidget):
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
         self.layout_horizontal2.addWidget(self.image)
-        self.layout_horizontal2.addWidget(self.informations)
         self.layout_horizontal2.addWidget(self.graphique)
         self.layout_vertical1.addLayout(self.layout_horizontal2)
         
