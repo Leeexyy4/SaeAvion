@@ -256,7 +256,7 @@ class Graphique(QWidget):
     def updateGraphique(self, image_path):
 
         pixmap = QPixmap(image_path)
-        pixmap = pixmap.scaled(800,750)
+        pixmap = pixmap.scaled(600,400)
         self.histoire_comp_label.setPixmap(pixmap)
         
 

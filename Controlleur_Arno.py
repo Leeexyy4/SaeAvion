@@ -75,6 +75,7 @@ class Controller():
 
 
         img = plt.imread("mapmonde.jpg")
+        plt.show()
         fig, ax = plt.subplots()
         ax.imshow(img, extent=[-180, 180, -180, 180])
         ax.scatter(points_x, points_y)
