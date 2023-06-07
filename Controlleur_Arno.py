@@ -107,7 +107,7 @@ class Controller():
         if len(comprequete)>1:
             for p in range(len(comprequete)-1):
                 requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[p] + "' OR "
-            requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[p] + "'"
+            requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[len(comprequete)-1] + "'"
 
         else:
             requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[0] + "'"
