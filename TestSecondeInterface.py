@@ -51,7 +51,6 @@ class Liste_Pays(QWidget):
 
     def changerCompRequete(self):
         self.pays_actuel = self.combo_total.currentText()
-        print(self.pays_actuel)
         self.paysChange.emit(self.pays_actuel)
 
     #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
@@ -101,7 +100,15 @@ class Liste_Compagnies(QWidget):
         self.setLayout(layout_ver)
 
     def ajoutCompRequete(self):
-        self.compagnie_requete.append(self.combo_total.currentText())
+
+        entrer = True
+        for r in self.compagnie_requete:
+            if r==self.combo_total.currentText():
+                entrer = False
+        
+        if entrer==True:
+            self.compagnie_requete.append(self.combo_total.currentText())
+        print(self.compagnie_requete)
 
 
     #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
@@ -232,13 +239,19 @@ class Graphique(QWidget):
         super().__init__()
         self.histoire_comp = QVBoxLayout()
         self.histoire_comp_label = QLabel("Graphique de la requete : ")
-        self.histoire_comp_champ = QTextEdit()
-        self.histoire_comp_champ.setStyleSheet("margin-bottom: 30px;")
+        pixmap = QPixmap()
+        pixmap = pixmap.scaled(1,1)
+        self.histoire_comp_label.setPixmap(pixmap)
 
         self.histoire_comp.addWidget(self.histoire_comp_label)
-        self.histoire_comp.addWidget(self.histoire_comp_champ)
         
         self.setLayout(self.histoire_comp)
+
+    def updateGraphique(self, image_path):
+
+        pixmap = QPixmap(image_path)
+        pixmap = pixmap.scaled(350,300)
+        self.histoire_comp_label.setPixmap(pixmap)
         
 
 class Interface1(QWidget):

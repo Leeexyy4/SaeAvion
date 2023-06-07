@@ -13,7 +13,7 @@ class Controller():
         self.DB_NAME = "sae_bdd" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
         self.DB_USER = "wissocq"
         self.DB_PASS = "arnaudwq"
-        self.DB_HOST = "172.25.176.1"
+        self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
 
@@ -54,10 +54,14 @@ class Controller():
         points_y = []
 
         for d in rows:
+            print(d)
             points_x.append(d[1])
             points_y.append(d[0])
 
+
         plt.scatter(points_x, points_y)
+        plt.savefig(fname="graphique")
+        self.vue.interf_1.graphique.updateGraphique("graphique.png")
 
         # fig, ax = plt.subplots(1, figsize=(4, 4), dpi=300)
         # ax.plot([1, 3, 5, 8, 4, 2])
@@ -65,7 +69,7 @@ class Controller():
         # temp_canvas = fig.canvas
         # plt.close()
 
-        plt.show()
+        print("a")
 
     def ajoutComboBoxPays(self):
 
@@ -79,7 +83,6 @@ class Controller():
     def ajoutComboBoxComp(self, pays_comp:str):
 
         self.vue.interf_1.liste_compagnies.combo_total.clear()
-        print('a')
 
         requete = "SELECT compagnie_nom FROM compagnie WHERE pays_id=(SELECT pays_id FROM pays WHERE pays_nom ILIKE '" + pays_comp + "') ORDER BY compagnie_nom "
 
@@ -91,18 +94,18 @@ class Controller():
             self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
     def fabriqueRequete(self):
-        requetefinale = "SELECT pays_id FROM pays WHERE "
-        paysrequete = self.vue.liste_pays.pays_requete
+        requetefinale = "SELECT latitude, longitude FROM aeroport WHERE aeroport_id IN (SELECT aeroport_arr_id FROM routes WHERE compagnie_id IN (SELECT compagnie_id FROM compagnie WHERE "
+        comprequete = self.vue.interf_1.liste_compagnies.compagnie_requete
 
-        if len(paysrequete)>1:
-            for p in range(len(paysrequete)-1):
-                requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "' OR "
-            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[p] + "'"
+        if len(comprequete)>1:
+            for p in range(len(comprequete)-1):
+                requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[p] + "' OR "
+            requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[p] + "'"
 
         else:
-            requetefinale = requetefinale + "pays_nom LIKE '" + paysrequete[0] + "'"
+            requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[0] + "'"
         
-        self.requeteSQL = requetefinale
+        self.requeteSQL = requetefinale + "))"
 
 if __name__ == "__main__":
     print(f'main')
