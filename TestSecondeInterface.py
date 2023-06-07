@@ -1,5 +1,6 @@
 import sys
 import typing
+import requete
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -9,6 +10,7 @@ from PyQt6.QtGui import QIcon, QPixmap
 class Liste_Aeroport(QWidget):
     def __init__(self) -> None:
         super().__init__()
+        
 
         self.aero_requete = []
         
@@ -44,15 +46,18 @@ class Liste_Aeroport(QWidget):
         
         # Setter du layout
         self.setLayout(layout_ver)
+        
+    #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
+    def resetAeroRequete(self):
+        if self.deselectall.isChecked() == True:
+            self.aero_requete = []
 
     def ajoutAeroRequete(self):
         self.aero_requete.append(self.combo_total.currentText())
         print(self.aero_requete)
 
-    #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
-    def resetAeroRequete(self):
-        if self.deselectall.isChecked() == True:
-            self.aero_requete = []
+    
+
         
 # Classe Liste_compagnies qui reprend le bandeau déroulant des compagnies et le texte associé
 class Liste_Compagnies(QWidget):
@@ -127,8 +132,8 @@ class Informations(QWidget):
         
         # Bandeau de l'aeroport et du champ d'écriture de l'aeroport
         self.aero_comp = QHBoxLayout()
-        self.aero_comp_label = QLabel("Aeroport :    ")
-        self.aero_comp_label.setStyleSheet("padding-right: 10px;padding-left: 10px;")
+        self.aero_comp_label = QLabel("Aeroport :")
+        self.aero_comp_label.setStyleSheet("padding-right: 10px;padding-left: -2px;")
         self.aero_comp_champ = QLineEdit()
         self.aero_comp_champ.setFixedWidth(200)
         self.aero_comp_champ.setStyleSheet("margin-right: 10px;")
@@ -338,12 +343,28 @@ class Total(QWidget):
 
     def __init__(self):
         super().__init__()
+        
+        self.req : QLineEdit = QLineEdit("requete")
+        self.graph : QLineEdit = QLineEdit("graph")
+        self.analyse : QLineEdit = QLineEdit("analyse")
+        self.explication : QLineEdit = QLineEdit("explication")
 
         self.interf_1 = Interface1()
         self.interf_2 = Interface2()
 
         self.interf_1.footer.suivant.clicked.connect(self.changeFenetre)
         self.interf_2.footer.suivant.clicked.connect(self.changeFenetre)
+        
+        self.interf_1.footer.precedent.clicked.connect(self.changeFenetre)
+        self.interf_2.footer.precedent.clicked.connect(self.changeFenetre)
+        
+    
+            
+    def updateRequete(self, req: str, graph:str, analyse: str, explication: str) -> None :
+        self.req.setText(req)
+        self.graph.setText(graph)
+        self.analyse.setText(analyse)
+        self.explication.setText(explication)
 
     def changeFenetre(self):
         if self.interf_2.isHidden() == True:
