@@ -40,11 +40,16 @@ class Controller():
  
     def Commande(self):
 
-        self.fabriqueRequete()
+        try:
+            self.fabriqueRequete()
+        except:
+            print("ERREUR: Aucune compagnie entrée HEIN SALE FILD DEUP TA CRU QUE CA ALLAIT CRASH HEIN ET BAH NAAAAAAN J'AI TOUT PREVU HAHAHHAHAHA")
+            return
 
         print(self.requeteSQL)
         #cur.execute("SELECT COUNT(aeroport_id) FROM routes r, aeroport a, pays p WHERE r.aeroport_arr_id=a.aeroport_id AND p.pays_id = a.pays_id AND pays_nom ILIKE 'germany'")
         #cur.execute(requete)
+        
         self.cur.execute(self.requeteSQL)
 
         
@@ -59,11 +64,13 @@ class Controller():
             points_y.append(d[0])
 
 
-        plt.scatter(points_x, points_y)
+        img = plt.imread("mapmonde.jpg")
+        fig, ax = plt.subplots()
+        ax.imshow(img, extent=[0, 400, 0, 300])
+        ax.scatter(points_x, points_y)
         plt.savefig(fname="graphique")
         self.vue.interf_1.graphique.updateGraphique("graphique.png")
 
-        # fig, ax = plt.subplots(1, figsize=(4, 4), dpi=300)
         # ax.plot([1, 3, 5, 8, 4, 2])
         # fig.canvas.draw()
         # temp_canvas = fig.canvas
@@ -94,7 +101,7 @@ class Controller():
             self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
     def fabriqueRequete(self):
-        requetefinale = "SELECT latitude, longitude FROM aeroport WHERE aeroport_id IN (SELECT aeroport_arr_id FROM routes WHERE compagnie_id IN (SELECT compagnie_id FROM compagnie WHERE "
+        requetefinale = "SELECT latitude, longitude FROM aeroport WHERE aeroport_id IN (SELECT aeroport_dep_id FROM routes WHERE compagnie_id IN (SELECT compagnie_id FROM compagnie WHERE "
         comprequete = self.vue.interf_1.liste_compagnies.compagnie_requete
 
         if len(comprequete)>1:

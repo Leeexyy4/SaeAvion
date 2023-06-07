@@ -240,7 +240,6 @@ class Graphique(QWidget):
         self.histoire_comp = QVBoxLayout()
         self.histoire_comp_label = QLabel("Graphique de la requete : ")
         pixmap = QPixmap()
-        pixmap = pixmap.scaled(1,1)
         self.histoire_comp_label.setPixmap(pixmap)
 
         self.histoire_comp.addWidget(self.histoire_comp_label)
