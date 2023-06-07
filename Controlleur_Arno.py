@@ -1,18 +1,18 @@
-import sys, TestSecondeInterface
-import psycopg2
+import sys, TestSecondeInterface, psycopg2, json, copy, os
 import matplotlib.pyplot as plt
 import numpy as np
 from Controlleur_Arno import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
+import bignono, requete
 
 
 class Controller():
     def __init__(self) -> None:
-        self.DB_NAME = "sae_bdd" #A CHANGER POUR QUE CA MARCHE POUR VOUS /!\/!\/!\/!\/!\/!\/!\
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
+        self.DB_NAME = "sae_bdd"
+        self.DB_USER = "crpsim"
+        self.DB_PASS = "simoncrp"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
@@ -31,12 +31,22 @@ class Controller():
         self.cur = conn.cursor()
 
         self.requeteSQL = ""
+        self.modele = bignono.Bignono('dico.json')
         self.vue = TestSecondeInterface.Total()
 
         self.ajoutComboBoxPays()
 
         self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
+        
+    def maj_vue(self) -> None:
+        r =self.modele.getRequete()
+        self.vue.updateRequete(r.requete,r.graph,r.analyse,r.explication)
+    
+    def update(self,d) -> None :
+        r2 = requete.Requete(d['requete'], d['graph'], d['analyse'], d['explication'])
+
+        self.modele.update(r2)
  
     def Commande(self):
 
@@ -76,7 +86,15 @@ class Controller():
         # temp_canvas = fig.canvas
         # plt.close()
 
-        print("a")
+        plt.show()
+        
+    def next(self) -> None:
+        self.modele.next()
+        self.maj_vue()
+
+    def previous(self) -> None:
+        self.modele.previous()
+        self.maj_vue()
 
     def ajoutComboBoxPays(self):
 

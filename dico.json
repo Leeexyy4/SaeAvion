@@ -1,0 +1,20 @@
+{
+    "dico": [
+        {
+            "requete": "Quels est le nombre d'aeroport dans le monde",
+            "graph": "aeroport_monde.png",
+            "analyse": "On remarque qu'il y a 900 aeroports dans le monde mdr",
+            "explication": "big mytho en fait j'ai mm pas regardé"
+        },{
+            "requete": "Pipi caca prout",
+            "graph": "prout.png",
+            "analyse": "Simon ne pete jamais",
+            "explication": "il est propre"
+        },{
+            "requete": "Arnaud grimace",
+            "graph": "arnaud.png",
+            "analyse": "On voit que les grimaces d'arnaud ont gagnés un granny award",
+            "explication": "il est 1er degré"
+        }
+    ]
+}

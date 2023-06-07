@@ -1,5 +1,6 @@
 import sys
 import typing
+import requete
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -13,6 +14,7 @@ class Liste_Pays(QWidget):
 
     def __init__(self) -> None:
         super().__init__()
+        
 
         self.pays_actuel = ""
         
@@ -48,6 +50,11 @@ class Liste_Pays(QWidget):
         
         # Setter du layout
         self.setLayout(layout_ver)
+        
+    #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
+    def resetAeroRequete(self):
+        if self.deselectall.isChecked() == True:
+            self.aero_requete = []
 
     def changerCompRequete(self):
         self.pays_actuel = self.combo_total.currentText()
@@ -354,12 +361,28 @@ class Total(QWidget):
 
     def __init__(self):
         super().__init__()
+        
+        self.req : QLineEdit = QLineEdit("requete")
+        self.graph : QLineEdit = QLineEdit("graph")
+        self.analyse : QLineEdit = QLineEdit("analyse")
+        self.explication : QLineEdit = QLineEdit("explication")
 
         self.interf_1 = Interface1()
         self.interf_2 = Interface2()
 
         self.interf_1.footer.suivant.clicked.connect(self.changeFenetre)
         self.interf_2.footer.suivant.clicked.connect(self.changeFenetre)
+        
+        self.interf_1.footer.precedent.clicked.connect(self.changeFenetre)
+        self.interf_2.footer.precedent.clicked.connect(self.changeFenetre)
+        
+    
+            
+    def updateRequete(self, req: str, graph:str, analyse: str, explication: str) -> None :
+        self.req.setText(req)
+        self.graph.setText(graph)
+        self.analyse.setText(analyse)
+        self.explication.setText(explication)
 
     def changeFenetre(self):
         if self.interf_2.isHidden() == True:
