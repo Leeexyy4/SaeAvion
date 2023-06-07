@@ -11,8 +11,8 @@ import bignono, requete
 class Controller():
     def __init__(self) -> None:
         self.DB_NAME = "sae_bdd"
-        self.DB_USER = "crpsim"
-        self.DB_PASS = "simoncrp"
+        self.DB_USER = "wissocq"
+        self.DB_PASS = "arnaudwq"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
@@ -76,7 +76,7 @@ class Controller():
 
         img = plt.imread("mapmonde.jpg")
         fig, ax = plt.subplots()
-        ax.imshow(img, extent=[0, 400, 0, 300])
+        ax.imshow(img, extent=[-180, 180, -180, 180])
         ax.scatter(points_x, points_y)
         plt.savefig(fname="graphique")
         self.vue.interf_1.graphique.updateGraphique("graphique.png")
@@ -85,8 +85,6 @@ class Controller():
         # fig.canvas.draw()
         # temp_canvas = fig.canvas
         # plt.close()
-
-        plt.show()
         
     def next(self) -> None:
         self.modele.next()
