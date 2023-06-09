@@ -1,6 +1,7 @@
 import sys
 import typing
 import requete
+import ImageWidget
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -325,19 +326,24 @@ class Interface2(QWidget):
         self.resize(800, 400)
         self.setWindowTitle("Requêtes qui pourraient vous interesser...")
 
-        #widgets
+        # Widgets
         self.requete = QLineEdit()
         self.graph = QLabel()
         self.analyse = QTextEdit("Analyse du graphique par notre équipe")
         self.explication = QTextEdit("Explication des données du graphiques")
         self.footer = Footer()
+        
+        # Read only text
+        self.requete.setReadOnly(True)
+        self.analyse.setReadOnly(True)
+        self.explication.setReadOnly(True)
 
-
+        # Buttons
         self.precedent = QPushButton("<< précédent")
         self.suivant = QPushButton("suivant >>")
         
 
-        #signaux
+        # signaux
         self.requete.editingFinished.connect(self.changeRequete)
         self.analyse.textChanged.connect(self.changeRequete)
         self.explication.textChanged.connect(self.changeRequete)
@@ -371,7 +377,20 @@ class Interface2(QWidget):
         pixmap = QPixmap(graph)
         pixmap = pixmap.scaled(350,300)
         self.image.setPixmap(pixmap)
+    
         
+    def setRequete(self, req) -> None :
+        self.requete.setText(req)
+        
+    def setGraph(self, graphique) -> None :
+        self.graph.setText(graphique)
+    
+    def setAnalyse(self, an) -> None :
+        self.analyse.setText(an)
+        
+    def setExplication(self, exp) -> None :
+        self.explication.setText(exp)
+    
     def changeRequete(self) -> None :
         self.requeteChanged.emit(self.getAllInfo())
 
@@ -387,19 +406,6 @@ class Interface2(QWidget):
                     "analyse":self.analyse.toPlainText(), 
                     "explication": self.explication.toPlainText()}
         return resultat
-    
-    def setRequete(self, req) -> None :
-        self.requete.setText(req)
-        
-    def setGraph(self, graphique) -> None :
-        self.graph.setText(graphique)
-    
-    def setAnalyse(self, an) -> None :
-        self.analyse.setText(an)
-        
-    def setExplication(self, exp) -> None :
-        self.explication.setText(exp)
-
 
 
 
@@ -407,11 +413,6 @@ class Total(QWidget):
 
     def __init__(self):
         super().__init__()
-        
-        # self.requete : QLineEdit = QLineEdit("requete")
-        # self.graph : QLineEdit = QLineEdit("graph")
-        # self.analyse : QLineEdit = QLineEdit("analyse")
-        # self.explication : QLineEdit = QLineEdit("explication")
 
         self.interf_1 = Interface1()
         self.interf_2 = Interface2()
@@ -422,7 +423,6 @@ class Total(QWidget):
         self.interf_1.footer.precedent.clicked.connect(self.changeFenetre)
         self.interf_2.footer.precedent.clicked.connect(self.changeFenetre)
         
-    
             
     # update : mise à jour de la vue
     def updateRequete(self, requete: str, graph:str, analyse: str, 
@@ -439,8 +439,6 @@ class Total(QWidget):
         else:
             self.interf_2.hide()
             self.interf_1.show()
-
-        
 
 
 if __name__ == "__main__":
