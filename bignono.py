@@ -19,7 +19,7 @@ class Bignono:
 
     def setCurrent(self, index :int|None) -> None : self.current = index
 
-    def update(self,r: requete.Requete) -> None:
+    def update(self, r: requete.Requete) -> None:
         requ = self.getRequete()
         if requ:
             requ.requete = copy.deepcopy(r.requete)

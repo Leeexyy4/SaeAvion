@@ -387,7 +387,18 @@ class Interface2(QWidget):
                     "analyse":self.analyse.toPlainText(), 
                     "explication": self.explication.toPlainText()}
         return resultat
+    
+    def setRequete(self, req) -> None :
+        self.requete.setText(req)
         
+    def setGraph(self, graphique) -> None :
+        self.graph.setText(graphique)
+    
+    def setAnalyse(self, an) -> None :
+        self.analyse.setText(an)
+        
+    def setExplication(self, exp) -> None :
+        self.explication.setText(exp)
 
 
 
@@ -416,11 +427,10 @@ class Total(QWidget):
     # update : mise à jour de la vue
     def updateRequete(self, requete: str, graph:str, analyse: str, 
                         explication: str) -> None :
-        
-        self.requete.setText(requete)
-        self.graph.setText(graph)
-        self.analyse.setText(analyse)
-        self.explication.setText(explication)
+        self.interf_2.setRequete(requete)
+        self.interf_2.setGraph(graph)
+        self.interf_2.setAnalyse(analyse)
+        self.interf_2.setExplication(explication)
 
     def changeFenetre(self):
         if self.interf_2.isHidden() == True:

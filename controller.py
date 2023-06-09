@@ -1,7 +1,7 @@
 import sys, TestSecondeInterface, psycopg2, json, copy, os
 import matplotlib.pyplot as plt
 import numpy as np
-from Controlleur_Arno import *
+from controller import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -10,12 +10,12 @@ import bignono, requete
 
 class Controller():
     def __init__(self) -> None:
+        # Connection to database
         self.DB_NAME = "sae"
         self.DB_USER = "henrion"
         self.DB_PASS = "mathou"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
-
 
         try:
             conn = psycopg2.connect(database=self.DB_NAME,
@@ -53,7 +53,6 @@ class Controller():
     
     def update(self,d) -> None :
         r2 = requete.Requete(d['requete'], d['graph'], d['analyse'], d['explication'])
-
         self.modele.update(r2)
 
     def Commande(self):
