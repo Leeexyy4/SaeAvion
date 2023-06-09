@@ -10,9 +10,9 @@ import bignono, requete
 
 class Controller():
     def __init__(self) -> None:
-        self.DB_NAME = "sae_bdd"
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
+        self.DB_NAME = "sae"
+        self.DB_USER = "henrion"
+        self.DB_PASS = "mathou"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
@@ -36,20 +36,27 @@ class Controller():
 
         self.ajoutComboBoxPays()
 
+
+        # slots ie callback
+        self.vue.interf_2.nextClicked.connect(self.next)
+        self.vue.interf_2.previousClicked.connect(self.previous)
+        self.vue.interf_2.requeteChanged.connect(self.update)
+
         self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
         
     def maj_vue(self) -> None:
-        r =self.modele.getRequete()
-        self.vue.updateRequete(r.requete,r.graph,r.analyse,r.explication)
+        r = self.modele.getRequete()
+        print(r)
+        if isinstance(r, requete.Requete):
+            self.vue.updateRequete(r.requete,r.graph,r.analyse,r.explication)
     
     def update(self,d) -> None :
         r2 = requete.Requete(d['requete'], d['graph'], d['analyse'], d['explication'])
 
         self.modele.update(r2)
- 
-    def Commande(self):
 
+    def Commande(self):
         try:
             self.fabriqueRequete()
         except:
@@ -75,9 +82,8 @@ class Controller():
 
 
         img = plt.imread("mapmonde.jpg")
-        plt.show()
         fig, ax = plt.subplots()
-        ax.imshow(img, extent=[-180, 180, -180, 180])
+        ax.imshow(img, extent=[0, 400, 0, 300])
         ax.scatter(points_x, points_y)
         plt.savefig(fname="graphique")
         self.vue.interf_1.graphique.updateGraphique("graphique.png")
@@ -86,6 +92,8 @@ class Controller():
         # fig.canvas.draw()
         # temp_canvas = fig.canvas
         # plt.close()
+
+        # plt.show()
         
     def next(self) -> None:
         self.modele.next()
