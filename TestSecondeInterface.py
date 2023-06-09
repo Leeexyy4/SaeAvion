@@ -270,7 +270,7 @@ class Interface1(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
-        self.setWindowTitle("Partie 1. :)")
+        self.setWindowTitle("Interface 1 : Emplacement des aéroports d'arrivée des compagnies")
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -311,6 +311,51 @@ class Interface1(QWidget):
 
         self.show()
 
+class Interface3(QWidget):
+    
+    def __init__(self) -> None:
+
+        super().__init__()
+        
+        # Caractéristique de la fenetre de l'interface
+        self.resize(800, 400)
+        self.setWindowTitle("Interface 3: Graphiques de tests")
+
+        # Ajout de l'icone Oasix
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("./Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
+        
+        # Création des instances des classes Listes_Pays et Liste_Compagnies
+        self.liste_pays = Liste_Pays()
+        self.liste_compagnies = Liste_Compagnies()
+        self.footer = Footer()
+        self.image = Image('Logo.png')
+        self.graphique = Graphique()
+
+        # Affichage de l'interface
+        self.layout_vertical1 = QVBoxLayout()
+        self.layout_horizontal1 = QHBoxLayout()
+        self.layout_horizontal2 = QHBoxLayout()
+        self.layout_horizontal3 = QHBoxLayout()
+        
+        # Ajout des widgets
+        self.layout_horizontal1.addWidget(self.liste_pays)
+        self.layout_horizontal1.addWidget(self.liste_compagnies)
+        self.layout_vertical1.addLayout(self.layout_horizontal1)
+        
+        self.layout_horizontal2.addWidget(self.image)
+        self.layout_horizontal2.addWidget(self.graphique)
+        self.layout_vertical1.addLayout(self.layout_horizontal2)
+        
+        self.layout_horizontal3.addWidget(self.footer)
+        self.layout_vertical1.addLayout(self.layout_horizontal3)
+        
+        # Ajouter un espace extensible
+        self.layout_vertical1.addStretch(1)
+        
+        self.setLayout(self.layout_vertical1)
+
 class Interface2(QWidget):
     
     def __init__(self) -> None:
@@ -319,7 +364,7 @@ class Interface2(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
-        self.setWindowTitle("PARTIE 2 !!!!")
+        self.setWindowTitle("Interface 2: Graphiques de tests")
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()

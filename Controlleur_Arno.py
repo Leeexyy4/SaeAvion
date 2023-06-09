@@ -1,13 +1,14 @@
 import sys, TestSecondeInterface, psycopg2, json, copy, os
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
 from Controlleur_Arno import *
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
+from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
 import bignono, requete
 
-
+simon = "skyblue"
 class Controller():
     def __init__(self) -> None:
         self.DB_NAME = "sae_bdd"
@@ -53,7 +54,7 @@ class Controller():
         try:
             self.fabriqueRequete()
         except:
-            print("ERREUR: Aucune compagnie entrée HEIN SALE FILD DEUP TA CRU QUE CA ALLAIT CRASH HEIN ET BAH NAAAAAAN J'AI TOUT PREVU HAHAHHAHAHA")
+            print("ERREUR: Aucune compagnie entrée")
             return
 
         print(self.requeteSQL)
@@ -69,23 +70,24 @@ class Controller():
         points_y = []
 
         for d in rows:
-            print(d)
             points_x.append(d[1])
             points_y.append(d[0])
 
 
-        img = plt.imread("mapmonde.jpg")
-        plt.show()
-        fig, ax = plt.subplots()
-        ax.imshow(img, extent=[-180, 180, -180, 180])
-        ax.scatter(points_x, points_y)
+        #slt cozot cv
+
+
+
+        world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+        # base = world.plot(color='white', edgecolor='black')
+        world.plot(color=simon)
+        plt.scatter(points_x, points_y, color="red", marker=".")
         plt.savefig(fname="graphique")
         self.vue.interf_1.graphique.updateGraphique("graphique.png")
 
-        # ax.plot([1, 3, 5, 8, 4, 2])
-        # fig.canvas.draw()
-        # temp_canvas = fig.canvas
-        # plt.close()
+
+
+        #plt.show()
         
     def next(self) -> None:
         self.modele.next()
