@@ -123,6 +123,41 @@ class Liste_Compagnies(QWidget):
         self.compagnie_requete = []
         
 
+
+class Liste_Options(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.option_choisie = "compagnie"
+
+        self.combo_option = QComboBox()
+        self.combo_option.addItem("Pollution par compagnie")
+        self.combo_option.addItem("Pollution par pays")
+        self.combo_option.addItem("Pollution par vol (court courrier)")
+        self.combo_option.addItem("Pollution par vol (moyen courrier)")
+        self.combo_option.addItem("Pollution par vol (long courrier)")
+
+        self.combo_option.currentTextChanged.connect(self.ajouteOption)
+
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(self.combo_option)
+        self.setLayout(self.layout)
+
+    def ajouteOption(self):
+        if self.combo_option.currentIndex ==1:
+            self.option_choisie = "compagnie"
+        if self.combo_option.currentIndex ==2:
+                self.option_choisie = "pays"
+        if self.combo_option.currentIndex ==3:
+            self.option_choisie = "vol_court"
+
+        if self.combo_option.currentIndex ==4:
+            self.option_choisie = "vol_moyen"
+        if self.combo_option.currentIndex ==5:
+            self.option_choisie = "vol_long"
+
+
+
 # Classe Informations qui reprend le logo et les informations
 class Informations(QWidget):
     def __init__(self):
@@ -199,6 +234,14 @@ class Informations(QWidget):
         
         # Setter du layout
         self.setLayout(layout_ver)
+
+    def UpdateInfos(self, nom_comp, nom_pays, co2_par_vol, nbavions_par_jour, nb_places):
+        self.nom_comp_champ.setText(nom_comp)
+        self.pays_comp_champ.setText(nom_pays)
+        self.co2_vol_champ.setText(str(co2_par_vol))
+        self.nb_avions_champ.setText(str(nbavions_par_jour))
+        self.nb_places_champ.setText(str(nb_places))
+
     
 class Image(QWidget):
     def __init__(self, image_path):
@@ -311,50 +354,6 @@ class Interface1(QWidget):
 
         self.show()
 
-class Interface3(QWidget):
-    
-    def __init__(self) -> None:
-
-        super().__init__()
-        
-        # Caractéristique de la fenetre de l'interface
-        self.resize(800, 400)
-        self.setWindowTitle("Interface 3: Graphiques de tests")
-
-        # Ajout de l'icone Oasix
-        self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
-        self.setWindowIcon(self.iconeFenetre)
-        
-        # Création des instances des classes Listes_Pays et Liste_Compagnies
-        self.liste_pays = Liste_Pays()
-        self.liste_compagnies = Liste_Compagnies()
-        self.footer = Footer()
-        self.image = Image('Logo.png')
-        self.graphique = Graphique()
-
-        # Affichage de l'interface
-        self.layout_vertical1 = QVBoxLayout()
-        self.layout_horizontal1 = QHBoxLayout()
-        self.layout_horizontal2 = QHBoxLayout()
-        self.layout_horizontal3 = QHBoxLayout()
-        
-        # Ajout des widgets
-        self.layout_horizontal1.addWidget(self.liste_pays)
-        self.layout_horizontal1.addWidget(self.liste_compagnies)
-        self.layout_vertical1.addLayout(self.layout_horizontal1)
-        
-        self.layout_horizontal2.addWidget(self.image)
-        self.layout_horizontal2.addWidget(self.graphique)
-        self.layout_vertical1.addLayout(self.layout_horizontal2)
-        
-        self.layout_horizontal3.addWidget(self.footer)
-        self.layout_vertical1.addLayout(self.layout_horizontal3)
-        
-        # Ajouter un espace extensible
-        self.layout_vertical1.addStretch(1)
-        
-        self.setLayout(self.layout_vertical1)
 
 class Interface2(QWidget):
     
@@ -401,6 +400,39 @@ class Interface2(QWidget):
         
         self.setLayout(self.layout_vertical1)
 
+class Interface3(QWidget):
+    
+    def __init__(self) -> None:
+
+        super().__init__()
+        
+        # Caractéristique de la fenetre de l'interface
+        self.resize(800, 400)
+        self.setWindowTitle("Interface 3: Graphiques de tests du CO2")
+
+        # Ajout de l'icone Oasix
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("./Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
+        
+        # Création des instances des classes Listes_Pays et Liste_Compagnies
+        self.liste_options = Liste_Options()
+        self.footer = Footer()
+
+        # Affichage de l'interface
+        self.layout_vertical = QVBoxLayout()
+        self.layout_horizontal = QHBoxLayout()
+        
+        # Ajout des widgets
+        self.layout_vertical.addWidget(self.liste_options)
+        self.layout_vertical.addWidget(self.footer)
+
+
+        # Ajouter un espace extensible
+        self.layout_vertical.addStretch(1)
+        
+        self.setLayout(self.layout_vertical)
+
 
 class Total(QWidget):
 
@@ -414,12 +446,15 @@ class Total(QWidget):
 
         self.interf_1 = Interface1()
         self.interf_2 = Interface2()
+        self.interf_3 = Interface3()
 
-        self.interf_1.footer.suivant.clicked.connect(self.changeFenetre)
-        self.interf_2.footer.suivant.clicked.connect(self.changeFenetre)
+        self.interf_1.footer.suivant.clicked.connect(self.changeFenetreSuiv)
+        self.interf_2.footer.suivant.clicked.connect(self.changeFenetreSuiv)
+        self.interf_3.footer.suivant.clicked.connect(self.changeFenetreSuiv)
         
-        self.interf_1.footer.precedent.clicked.connect(self.changeFenetre)
-        self.interf_2.footer.precedent.clicked.connect(self.changeFenetre)
+        self.interf_1.footer.precedent.clicked.connect(self.changeFenetrePrec)
+        self.interf_2.footer.precedent.clicked.connect(self.changeFenetrePrec)
+        self.interf_3.footer.precedent.clicked.connect(self.changeFenetrePrec)
         
     
             
@@ -429,13 +464,27 @@ class Total(QWidget):
         self.analyse.setText(analyse)
         self.explication.setText(explication)
 
-    def changeFenetre(self):
-        if self.interf_2.isHidden() == True:
+    def changeFenetreSuiv(self):
+        if self.interf_2.isHidden() == True and self.interf_1.isHidden() == True:
+            self.interf_3.hide()
+            self.interf_1.show()
+        elif self.interf_3.isHidden() == True and self.interf_1.isHidden() == True:
+            self.interf_2.hide()
+            self.interf_3.show()
+        else:
             self.interf_1.hide()
             self.interf_2.show()
-        else:
+
+    def changeFenetrePrec(self):
+        if self.interf_2.isHidden() == True and self.interf_1.isHidden() == True:
+            self.interf_3.hide()
+            self.interf_2.show()
+        elif self.interf_3.isHidden() == True and self.interf_1.isHidden() == True:
             self.interf_2.hide()
             self.interf_1.show()
+        else:
+            self.interf_1.hide()
+            self.interf_3.show()
 
         
 

@@ -17,7 +17,7 @@ class Controller():
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
-
+        #connection à la base de donnée
         try:
             conn = psycopg2.connect(database=self.DB_NAME,
                                     user=self.DB_USER,
@@ -37,8 +37,20 @@ class Controller():
 
         self.ajoutComboBoxPays()
 
-        self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
+        self.vue.interf_1.footer.requete.clicked.connect(self.CommandeMap)
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
+
+        self.vue.interf_1.liste_compagnies.combo_total.currentIndexChanged.connect(self.getInfosCompagnie)
+
+
+    def getInfosCompagnie(self):
+
+        comp_requete = self.vue.interf_1.liste_compagnies.combo_total.currentText()
+        self.cur.execute("SELECT DISTINCT c.compagnie_nom, p.pays_nom, AVG((e.pollution/nr.nb_routes)) co2_par_vol, na.nb_avions/3 nb_avions_par_jour, na.nb_avions FROM compagnie c, routes r, pays p, emissions_co2_compagnie e, nb_routes_compagnies nr, nb_avions_compagnies na WHERE c.compagnie_id = r.compagnie_id AND c.pays_id = p.pays_id AND e.compagnie_id = c.compagnie_id AND nr.compagnie_id = c.compagnie_id AND na.compagnie_id = c.compagnie_id  AND c.compagnie_nom ILIKE '"+ comp_requete +"' GROUP BY c.compagnie_nom, p.pays_nom, nb_avions_par_jour, na.nb_avions")
+
+        rows = self.cur.fetchall()[0]
+
+        self.vue.interf_1.informations.UpdateInfos(rows[0],rows[1],rows[2],rows[3],rows[4])
         
     def maj_vue(self) -> None:
         r =self.modele.getRequete()
@@ -49,10 +61,10 @@ class Controller():
 
         self.modele.update(r2)
  
-    def Commande(self):
+    def CommandeMap(self):
 
         try:
-            self.fabriqueRequete()
+            self.fabriqueRequeteMap()
         except:
             print("ERREUR: Aucune compagnie entrée")
             return
@@ -72,9 +84,6 @@ class Controller():
         for d in rows:
             points_x.append(d[1])
             points_y.append(d[0])
-
-
-        #slt cozot cv
 
 
 
@@ -119,7 +128,7 @@ class Controller():
         for i in rows:
             self.vue.interf_1.liste_compagnies.combo_total.addItem(i[0])
 
-    def fabriqueRequete(self):
+    def fabriqueRequeteMap(self):
         requetefinale = "SELECT latitude, longitude FROM aeroport WHERE aeroport_id IN (SELECT aeroport_dep_id FROM routes WHERE compagnie_id IN (SELECT compagnie_id FROM compagnie WHERE "
         comprequete = self.vue.interf_1.liste_compagnies.compagnie_requete
 
