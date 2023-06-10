@@ -9,6 +9,13 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import bignono, requete
 
 simon = "skyblue"
+
+font = {'family' : 'sans-serif',
+'weight' : 'bold',
+'size' : 10}
+
+plt.rc('font', **font)
+
 class Controller():
     def __init__(self) -> None:
 
@@ -27,12 +34,14 @@ class Controller():
         self.vue.interf_1.footer.requete.clicked.connect(self.CommandeMap)
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
 
+        self.vue.interf_3.footer.requete.clicked.connect(self.CommandeCO2)
+
         self.vue.interf_1.liste_compagnies.combo_total.currentIndexChanged.connect(self.getInfosCompagnie)
 
 
     def connectionBDD(self):
         # Connection to database
-        self.DB_NAME = "sae_bdd"
+        self.DB_NAME = self.demandeBDD.db_name.text()
         self.DB_USER = self.demandeBDD.db_user.text()
         self.DB_PASS = self.demandeBDD.db_pass.text()
         self.DB_HOST = "127.0.0.1"
@@ -45,10 +54,14 @@ class Controller():
                                     host=self.DB_HOST,
                                     port=self.DB_PORT)
             print("Database connected successfully")
-            self.demandeBDD.hide()
+
+            #si la connection se passe bien, on change d'interface et on crée un curseur
+            #tant que la connection échoue, on reste sur la même interface
             self.cur = conn.cursor()
+            self.demandeBDD.destroy()
             self.vue.interf_1.show()
             self.ajoutComboBoxPays()
+
         except:
             print("Database not connected successfully")
 
@@ -59,7 +72,6 @@ class Controller():
         self.cur.execute("SELECT DISTINCT c.compagnie_nom, p.pays_nom, AVG((e.pollution/nr.nb_routes)) co2_par_vol, na.nb_avions/3 nb_avions_par_jour, na.nb_avions FROM compagnie c, routes r, pays p, emissions_co2_compagnie e, nb_routes_compagnies nr, nb_avions_compagnies na WHERE c.compagnie_id = r.compagnie_id AND c.pays_id = p.pays_id AND e.compagnie_id = c.compagnie_id AND nr.compagnie_id = c.compagnie_id AND na.compagnie_id = c.compagnie_id  AND c.compagnie_nom ILIKE '"+ comp_requete +"' GROUP BY c.compagnie_nom, p.pays_nom, nb_avions_par_jour, na.nb_avions")
 
         colonnes= self.cur.fetchall()
-        print(colonnes)
         if len(colonnes)>0:
             rows=colonnes[0]
             self.vue.interf_1.informations.UpdateInfos(rows[0],rows[1],rows[2],rows[3],rows[4])
@@ -83,7 +95,6 @@ class Controller():
             print("ERREUR: Aucune compagnie entrée")
             return
 
-        print(self.requeteSQL)
         #cur.execute("SELECT COUNT(aeroport_id) FROM routes r, aeroport a, pays p WHERE r.aeroport_arr_id=a.aeroport_id AND p.pays_id = a.pays_id AND pays_nom ILIKE 'germany'")
         #cur.execute(requete)
         
@@ -103,14 +114,37 @@ class Controller():
 
         world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
         # base = world.plot(color='white', edgecolor='black')
+        plt.clf()
         world.plot(color=simon)
         plt.scatter(points_x, points_y, color="red", marker=".")
-        plt.savefig(fname="./images/graphique")
-        self.vue.interf_1.graphique.updateGraphique("./images/graphique.png")
+        plt.savefig(fname="./images/graphiquecarte")
+        self.vue.interf_1.graphique.updateGraphique("./images/graphiquecarte.png", (350,300))
 
 
 
         #plt.show()
+
+    def CommandeCO2(self):
+
+        self.fabriqueRequeteCO2()
+
+        self.cur.execute(self.requeteSQL)
+
+        
+        rows = self.cur.fetchall()
+        x = []
+        y = []
+
+        for d in rows:
+            x.append(d[0])
+            y.append(round(d[1]))
+
+        plt.clf()
+        plt.figure(figsize=(15,5))
+        plt.barh(x,y, linewidth=0.5)
+        plt.savefig(fname="./images/graphiqueCO2")
+        self.vue.interf_3.graphique.updateGraphique("./images/graphiqueCO2.png", (800,400))
+
         
     def next(self) -> None:
         self.modele.next()
@@ -120,6 +154,7 @@ class Controller():
         self.modele.previous()
         self.maj_vue()
 
+    #cette fonction ets utilisée dès la connection à la base de données pour remplir le combobox des pays
     def ajoutComboBoxPays(self):
 
         self.cur.execute("SELECT pays_nom FROM pays ORDER BY pays_nom")
@@ -129,6 +164,7 @@ class Controller():
         for i in rows:
             self.vue.interf_1.liste_pays.combo_total.addItem(i[0])
 
+    #cette fonction est utilisée dès qu'un pays a été choisi
     def ajoutComboBoxComp(self, pays_comp:str):
 
         self.vue.interf_1.liste_compagnies.combo_total.clear()
@@ -155,6 +191,29 @@ class Controller():
             requetefinale = requetefinale + "compagnie_nom LIKE '" + comprequete[0] + "'"
         
         self.requeteSQL = requetefinale + "))"
+
+
+    #cette fonction sert à connaître la requête qui devra être faite pour le graphique de l'interface 3.
+    def fabriqueRequeteCO2(self):
+
+        if self.vue.interf_3.liste_options.option_choisie == "compagnie":
+            if self.vue.interf_3.liste_options.option_graphiqueplus.isChecked() == True: #option_graphique_plus est check de base
+                self.requeteSQL = "SELECT c.compagnie_nom, SUM(e.pollution) FROM compagnie AS c INNER JOIN emissions_co2_compagnie AS e ON c.compagnie_id = e.compagnie_id GROUP BY c.compagnie_nom ORDER BY SUM(e.pollution) desc LIMIT 10"
+            else: #si plus est pas check alors c'est moins
+                self.requeteSQL = "SELECT c.compagnie_nom, SUM(e.pollution) FROM compagnie AS c INNER JOIN emissions_co2_compagnie AS e ON c.compagnie_id = e.compagnie_id GROUP BY c.compagnie_nom ORDER BY SUM(e.pollution) LIMIT 10"
+
+        if self.vue.interf_3.liste_options.option_choisie == "pays_dep":
+            if self.vue.interf_3.liste_options.option_graphiqueplus.isChecked() == True:
+                self.requeteSQL = "SELECT p.pays_nom, SUM(e.pollution) FROM pays AS p INNER JOIN emissions_co2_pays_dep AS e ON p.pays_id = e.pays_id GROUP BY p.pays_nom ORDER BY SUM(e.pollution) desc LIMIT 10"
+            else:
+                self.requeteSQL = "SELECT p.pays_nom, SUM(e.pollution) FROM pays AS p INNER JOIN emissions_co2_pays_dep AS e ON p.pays_id = e.pays_id GROUP BY p.pays_nom ORDER BY SUM(e.pollution) LIMIT 10"
+
+        if self.vue.interf_3.liste_options.option_choisie == "pays_arr":
+            if self.vue.interf_3.liste_options.option_graphiqueplus.isChecked() == True:
+                self.requeteSQL = "SELECT p.pays_nom, SUM(e.pollution) FROM pays AS p INNER JOIN emissions_co2_pays_arr AS e ON p.pays_id = e.pays_id GROUP BY p.pays_nom ORDER BY SUM(e.pollution) desc LIMIT 10"
+            else:
+                self.requeteSQL = "SELECT p.pays_nom, SUM(e.pollution) FROM pays AS p INNER JOIN emissions_co2_pays_arr AS e ON p.pays_id = e.pays_id GROUP BY p.pays_nom ORDER BY SUM(e.pollution) LIMIT 10"
+
 
 if __name__ == "__main__":
     print(f'main')
