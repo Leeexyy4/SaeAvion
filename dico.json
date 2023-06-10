@@ -47,7 +47,7 @@
             "explication": "Il consomme preque trois fois plus que la compagnie Providence Aviation Services qui est en 2ème position"
         },{
             "requete": "Quels sont les 10 avions voyageant le plus ? ",
-            "graph": "./images/avions_voyage+.png",
+            "graph": "./images/avions_voyage.png",
             "analyse": "L'Airbus A320 est l'avion faisant le plus de trajets",
             "explication": "Les avions Airbus sont conçues exprès pour les voyages à longue distance et pour le tourisme"
         },{

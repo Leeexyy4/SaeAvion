@@ -12,9 +12,9 @@ simon = "skyblue"
 class Controller():
     def __init__(self) -> None:
         # Connection to database
-        self.DB_NAME = "sae_bdd"
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
+        self.DB_NAME = "sae"
+        self.DB_USER = "henrion"
+        self.DB_PASS = "mathou"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
