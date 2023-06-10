@@ -11,31 +11,13 @@ import bignono, requete
 simon = "skyblue"
 class Controller():
     def __init__(self) -> None:
-        # Connection to database
-        self.DB_NAME = "sae_bdd"
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
-        self.DB_HOST = "127.0.0.1"
-        self.DB_PORT = "5432"
-
-        try:
-            conn = psycopg2.connect(database=self.DB_NAME,
-                                    user=self.DB_USER,
-                                    password=self.DB_PASS,
-                                    host=self.DB_HOST,
-                                    port=self.DB_PORT)
-            print("Database connected successfully")
-        except:
-            print("Database not connected successfully")
-            sys.exit()
-
-        self.cur = conn.cursor()
 
         self.requeteSQL = ""
         self.modele = bignono.Bignono('dico.json')
         self.vue = TestSecondeInterface.Total()
 
-        self.ajoutComboBoxPays()
+        self.demandeBDD = TestSecondeInterface.DemandeBDD()
+        self.demandeBDD.accepte.clicked.connect(self.connectionBDD)
 
         # slots ie callback
         self.vue.interf_2.nextClicked.connect(self.next)
@@ -46,6 +28,29 @@ class Controller():
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
 
         self.vue.interf_1.liste_compagnies.combo_total.currentIndexChanged.connect(self.getInfosCompagnie)
+
+
+    def connectionBDD(self):
+        # Connection to database
+        self.DB_NAME = "sae_bdd"
+        self.DB_USER = self.demandeBDD.db_user.text()
+        self.DB_PASS = self.demandeBDD.db_pass.text()
+        self.DB_HOST = "127.0.0.1"
+        self.DB_PORT = "5432"
+
+        try:
+            conn = psycopg2.connect(database=self.DB_NAME,
+                                    user=self.DB_USER,
+                                    password=self.DB_PASS,
+                                    host=self.DB_HOST,
+                                    port=self.DB_PORT)
+            print("Database connected successfully")
+            self.demandeBDD.hide()
+            self.cur = conn.cursor()
+            self.vue.interf_1.show()
+            self.ajoutComboBoxPays()
+        except:
+            print("Database not connected successfully")
 
 
     def getInfosCompagnie(self):
@@ -96,8 +101,8 @@ class Controller():
         # base = world.plot(color='white', edgecolor='black')
         world.plot(color=simon)
         plt.scatter(points_x, points_y, color="red", marker=".")
-        plt.savefig(fname="graphique")
-        self.vue.interf_1.graphique.updateGraphique("graphique.png")
+        plt.savefig(fname="./images/graphique")
+        self.vue.interf_1.graphique.updateGraphique("./images/graphique.png")
 
 
 

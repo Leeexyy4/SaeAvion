@@ -317,7 +317,7 @@ class Interface1(QWidget):
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
+        self.iconeFenetre.addFile("images/Logo.png")
         self.setWindowIcon(self.iconeFenetre)
         
         # Création des instances des classes Listes_Pays et Liste_Compagnies
@@ -325,7 +325,7 @@ class Interface1(QWidget):
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
         self.footer = Footer()
-        self.image = Image('Logo.png')
+        self.image = Image('images/Logo.png')
         self.graphique = Graphique()
 
         # Affichage de l'interface
@@ -351,8 +351,6 @@ class Interface1(QWidget):
         self.layout_vertical1.addStretch(1)
         
         self.setLayout(self.layout_vertical1)
-
-        self.show()
 
 
 class Interface2(QWidget):
@@ -484,6 +482,28 @@ class Interface3(QWidget):
         
         self.setLayout(self.layout_vertical)
 
+class DemandeBDD(QWidget):
+    def __init__(self) -> None:
+    
+        super().__init__()
+
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        self.resize(400, 100)
+
+        self.db_user = QLineEdit()
+        self.db_pass = QLineEdit()
+
+        self.db_user.setPlaceholderText("Votre nom d'utilisateur SQL")
+        self.db_pass.setPlaceholderText("Votre mot de passe de l'utilisateur SQL")
+
+        self.accepte = QPushButton("Connection à la base de données")
+
+        self.layout.addWidget(self.db_user)
+        self.layout.addWidget(self.db_pass)
+        self.layout.addWidget(self.accepte)
+
+        self.show()
 
 class Total(QWidget):
 
