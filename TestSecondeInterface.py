@@ -4,7 +4,7 @@ import requete
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtGui import QIcon, QPixmap, QPalette
 
 # Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
 class Liste_Pays(QWidget):
@@ -314,6 +314,7 @@ class Interface1(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Interface 1 : Emplacement des aéroports d'arrivée des compagnies")
+        self.setStyleSheet('Interface1{background:#D4F6FF}')
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -366,6 +367,7 @@ class Interface2(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Requêtes qui pourraient vous interesser...")
+        self.setStyleSheet('Interface2{background:#FFC1C1}')
 
         # Widgets
         self.requete = QLineEdit()
@@ -458,6 +460,7 @@ class Interface3(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Interface 3: Graphiques de tests du CO2")
+        self.setStyleSheet('Interface3{background:#FFD8BE}')
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
