@@ -370,6 +370,7 @@ class Interface2(QWidget):
 
         # Widgets
         self.requete = QLineEdit()
+        self.requete.setStyleSheet("min-width: 750px;")
         self.graph = QLabel()
         self.analyse = QTextEdit("Analyse du graphique par notre équipe")
         self.explication = QTextEdit("Explication des données du graphiques")
@@ -391,7 +392,10 @@ class Interface2(QWidget):
         self.explication.textChanged.connect(self.changeRequete)
 
         self.precedent.clicked.connect(self.requetePrecedente)
+        self.precedent.setStyleSheet("margin-left: 200px;")
         self.suivant.clicked.connect(self.requeteSuivante)
+        self.suivant.setStyleSheet("margin-right: 200px;")
+
         
         layout = QVBoxLayout(); self.setLayout(layout)
         nom_requete = QHBoxLayout()
@@ -399,11 +403,11 @@ class Interface2(QWidget):
         analyse_expli = QHBoxLayout()
 
         nom_requete.addWidget(self.precedent, 1)
-        nom_requete.addWidget(self.requete,6)
+        nom_requete.addWidget(self.requete, 1)
+        nom_requete.addWidget(self.suivant, 1)
         analyse_expli.addWidget(self.analyse, 1)
         analyse_expli.addWidget(self.explication, 1)
-        nom_requete.addWidget(self.suivant, 1)
-        nom_requete.addWidget(self.precedent, 1)
+        
         layout.addLayout(nom_requete)
         layout.addLayout(graphi)
         layout.addLayout(analyse_expli)
@@ -417,7 +421,7 @@ class Interface2(QWidget):
             
     def updateGraphi(self, graph):
         pixmap = QPixmap(graph)
-        pixmap = pixmap.scaled(1200,600, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = pixmap.scaled(1500,750, Qt.AspectRatioMode.KeepAspectRatio)
         self.image.setPixmap(pixmap)
         
     def getGraph(self) -> str:

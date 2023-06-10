@@ -1,19 +1,24 @@
 {
     "dico": [
         {
-            "requete": "Quelle est la pollution totale des arrivées par pays ?",
-            "graph": "./images/pollution_pays_arr.png",
-            "analyse": "Le plus grand émetteur de CO2 pour les arrivées sont les États-Unis",
-            "explication": "/"
-        },{
-            "requete": "Quelle est la pollution totale des départs par pays ?",
-            "graph": "./images/pollution_pays_dep.png",
-            "analyse": "Le plus grand émetteur de CO2 pour les départs sont les États-Unis",
-            "explication": "/"
-        },{
             "requete": "Quelle est la pollution par passagers des vols longs ?",
             "graph": "./images/pollution_sieges_long.png",
             "analyse": "Ce sont les avions à deux places qui émettent le plus de CO2",
+            "explication": "La pollution étant calculée en fonction du nombre de passagers moins il y a de passagers plus la pollution est élevée par passagers"
+        },{
+            "requete": "Quelle est la pollution totale des départs par pays ?",
+            "graph": "./images/pollution_pays_dep.png",
+            "analyse": "Nous avons donc ici un classement des pays émettant le plus de CO2 par rapport au départs d'avions dans ces pays en question. Nous avons décidé de n'afficher que les 10 premiers pour avoir un graphique compréhensible. \n- Les États-Unis sont le pays avec la plus grande quantité d'émissions de pollution, totalisant environ 11,448 milliards de tonnes.\n- L'Allemagne occupe la deuxième place avec environ 10,520 milliards de tonnes.\n- La Zambie est le troisième pays le plus pollueur avec environ 5,475 milliards de tonnes.\n- La Russie, le Mexique, la Corée du Sud, la Chine, le Brésil, le Royaume-Uni et l'Inde complètent le top 10 des pays les plus pollueurs.",
+            "explication": "Plusieurs causes peuvent expliquer ce classement.\n- Activités industrielles : Les pays ayant une forte activité industrielle, notamment dans des secteurs tels que la production d'énergie, l'industrie manufacturière, l'exploitation minière, peuvent avoir des émissions de pollution élevées. Par exemple, les États-Unis et l'Allemagne sont tous deux des pays industrialisés avec de grandes économies.\n- Taille de la population : Les pays avec une population plus importante ont souvent une demande énergétique plus élevée, ce qui peut entraîner des émissions de pollution plus élevées. Par exemple, la Chine et l'Inde, qui ont une population très importante, figurent dans le top 10 des pays les plus pollueurs.\n- Mix énergétique : Les pays qui dépendent fortement des combustibles fossiles tels que le charbon, le pétrole et le gaz naturel pour la production d'électricité et les besoins énergétiques ont tendance à avoir des émissions de pollution plus élevées. Cela peut être le cas de certains pays de ce classement.\n- Politiques environnementales : Les différences dans les politiques environnementales, telles que les réglementations sur les émissions, les incitations à l'adoption d'énergies propres, peuvent influencer les niveaux d'émissions de pollution d'un pays."
+        },{
+            "requete": "Quelle est la pollution totale des arrivées par pays ?",
+            "graph": "./images/pollution_pays_arr.png",
+            "analyse": "Cette fois, nous avons un classement des pays émettant le plus de CO2 par rapport au arrivées d'avions dans ces pays en question. Nous ne gardons toujours que les 10 premiers pour avoir un affichage correcte.\n-  Les États-Unis restent le pays avec la plus grande quantité d'émissions de pollution, totalisant environ 11,287 milliards de tonnes. Malgré une légère diminution par rapport aux résultats précédents, les États-Unis conservent leur position en tant que principal émetteur de pollution.\n- L'Allemagne occupe toujours la deuxième place, avec environ 10,516 milliards de tonnes d'émissions. Tout comme les États-Unis, l'Allemagne maintient sa position, mais avec une légère diminution des émissions par rapport aux données précédentes.\n- Le Zambie conserve sa position à la troisième place, avec environ 5,466 milliards de tonnes d'émissions. Malgré une légère diminution par rapport aux résultats précédents, la Zambie reste relativement élevée en termes d'émissions de pollution pour un pays de sa taille.\n- La Russie se classe quatrième, avec environ 3,091 milliards de tonnes d'émissions. Il y a une légère augmentation par rapport aux données précédentes, mais la Russie maintient globalement sa position.\n- Le Mexique, la Corée du Sud, La Chine, le Brésil, l'Angleterre, et l'Inde conservent également leurs positions respectives dans le top 10 des pays les plus pollueurs, avec des variations mineures dans leurs niveaux d'émissions.",
+            "explication": "D'autres causes peuvent êtres prisent en compte pour expliquer ce classement. Activités économiques : Les pays qui ont une forte activité économique, avec des industries développées, des infrastructures touristiques et des échanges commerciaux importants, peuvent avoir un nombre plus élevé d'arrivées d'avions, ce qui peut conduire à des émissions de CO2 plus élevées. Par exemple, les États-Unis et l'Allemagne sont des économies majeures avec une forte présence dans le secteur du transport aérien.\n- Taille de la population et tourisme : Les pays avec une population importante et/ou une industrie touristique développée peuvent attirer un grand nombre de visiteurs internationaux, ce qui se traduit par un nombre élevé d'arrivées d'avions. Par conséquent, ils peuvent avoir des émissions de CO2 plus élevées liées au transport aérien. La Chine et l'Inde, avec leur population importante, pourraient être des exemples de pays dans ce cas.\n- Connectivité aérienne : Les pays qui sont des hubs aériens majeurs ou qui ont des compagnies aériennes importantes peuvent voir un trafic aérien accru, ce qui peut contribuer à des émissions de CO2 plus élevées. Par exemple, le Royaume-Uni avec l'aéroport de Londres Heathrow, la Corée du Sud avec l'aéroport d'Incheon et le Mexique avec l'aéroport de Mexico peuvent être des pays qui bénéficient d'une connectivité aérienne importante."
+        },{
+            "requete": "Quelle est la pollution par passagers des vols longs pour le tourisme ?",
+            "graph": "./images/pollution_sieges_long_tourisme.png",
+            "analyse": "Ce sont les avions avec peu de places qui émettent le plus de CO2",
             "explication": "La pollution étant calculée en fonction du nombre de passagers moins il y a de passagers plus la pollution est élevée par passagers"
         },{
             "requete": "Quelle est la pollution par passagers des vols longs pour le tourisme ?",
