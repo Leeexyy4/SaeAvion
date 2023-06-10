@@ -58,9 +58,13 @@ class Controller():
         comp_requete = self.vue.interf_1.liste_compagnies.combo_total.currentText()
         self.cur.execute("SELECT DISTINCT c.compagnie_nom, p.pays_nom, AVG((e.pollution/nr.nb_routes)) co2_par_vol, na.nb_avions/3 nb_avions_par_jour, na.nb_avions FROM compagnie c, routes r, pays p, emissions_co2_compagnie e, nb_routes_compagnies nr, nb_avions_compagnies na WHERE c.compagnie_id = r.compagnie_id AND c.pays_id = p.pays_id AND e.compagnie_id = c.compagnie_id AND nr.compagnie_id = c.compagnie_id AND na.compagnie_id = c.compagnie_id  AND c.compagnie_nom ILIKE '"+ comp_requete +"' GROUP BY c.compagnie_nom, p.pays_nom, nb_avions_par_jour, na.nb_avions")
 
-        rows = self.cur.fetchall()[0]
-
-        self.vue.interf_1.informations.UpdateInfos(rows[0],rows[1],rows[2],rows[3],rows[4])
+        colonnes= self.cur.fetchall()
+        print(colonnes)
+        if len(colonnes)>0:
+            rows=colonnes[0]
+            self.vue.interf_1.informations.UpdateInfos(rows[0],rows[1],rows[2],rows[3],rows[4])
+        else:
+            self.vue.interf_1.informations.UpdateInfos("Aucune infos trouvées :c","","","","")
         
     def maj_vue(self) -> None:
         r = self.modele.getRequete()
