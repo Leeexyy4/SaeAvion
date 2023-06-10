@@ -417,7 +417,7 @@ class Interface2(QWidget):
             
     def updateGraphi(self, graph):
         pixmap = QPixmap(graph)
-        pixmap = pixmap.scaled(350,300)
+        pixmap = pixmap.scaled(1200,600, Qt.AspectRatioMode.KeepAspectRatio)
         self.image.setPixmap(pixmap)
         
     def getGraph(self) -> str:
