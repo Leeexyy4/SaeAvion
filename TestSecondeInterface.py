@@ -1,6 +1,7 @@
 import sys
 import typing
 import requete
+import ImageWidget
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -299,7 +300,7 @@ class Graphique(QWidget):
     def updateGraphique(self, image_path):
 
         pixmap = QPixmap(image_path)
-        pixmap = pixmap.scaled(600,400)
+        pixmap = pixmap.scaled(350,300)
         self.histoire_comp_label.setPixmap(pixmap)
         
 
@@ -356,6 +357,10 @@ class Interface1(QWidget):
 
 
 class Interface2(QWidget):
+    # signal
+    requeteChanged : pyqtSignal = pyqtSignal(dict)
+    nextClicked = pyqtSignal()
+    previousClicked = pyqtSignal()
     
     def __init__(self) -> None:
 
@@ -363,42 +368,89 @@ class Interface2(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
-        self.setWindowTitle("Interface 2: Graphiques de tests")
+        self.setWindowTitle("Requêtes qui pourraient vous interesser...")
 
-        # Ajout de l'icone Oasix
-        self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
-        self.setWindowIcon(self.iconeFenetre)
-        
-        # Création des instances des classes Listes_Pays et Liste_Compagnies
-        self.liste_pays = Liste_Pays()
-        self.liste_compagnies = Liste_Compagnies()
+        # Widgets
+        self.requete = QLineEdit()
+        self.graph = QLabel()
+        self.analyse = QTextEdit("Analyse du graphique par notre équipe")
+        self.explication = QTextEdit("Explication des données du graphiques")
         self.footer = Footer()
-        self.image = Image('Logo.png')
-        self.graphique = Graphique()
+        
+        # Read only text
+        self.requete.setReadOnly(True)
+        self.analyse.setReadOnly(True)
+        self.explication.setReadOnly(True)
 
-        # Affichage de l'interface
-        self.layout_vertical1 = QVBoxLayout()
-        self.layout_horizontal1 = QHBoxLayout()
-        self.layout_horizontal2 = QHBoxLayout()
-        self.layout_horizontal3 = QHBoxLayout()
+        # Buttons
+        self.precedent = QPushButton("<< précédent")
+        self.suivant = QPushButton("suivant >>")
         
-        # Ajout des widgets
-        self.layout_horizontal1.addWidget(self.liste_pays)
-        self.layout_horizontal1.addWidget(self.liste_compagnies)
-        self.layout_vertical1.addLayout(self.layout_horizontal1)
+
+        # signaux
+        self.requete.editingFinished.connect(self.changeRequete)
+        self.analyse.textChanged.connect(self.changeRequete)
+        self.explication.textChanged.connect(self.changeRequete)
+
+        self.precedent.clicked.connect(self.requetePrecedente)
+        self.suivant.clicked.connect(self.requeteSuivante)
         
-        self.layout_horizontal2.addWidget(self.image)
-        self.layout_horizontal2.addWidget(self.graphique)
-        self.layout_vertical1.addLayout(self.layout_horizontal2)
+        layout = QVBoxLayout(); self.setLayout(layout)
+        nom_requete = QHBoxLayout()
+        graphi = QHBoxLayout()
+        analyse_expli = QHBoxLayout()
+
+        nom_requete.addWidget(self.precedent, 1)
+        nom_requete.addWidget(self.requete,6)
+        analyse_expli.addWidget(self.analyse, 1)
+        analyse_expli.addWidget(self.explication, 1)
+        nom_requete.addWidget(self.suivant, 1)
+        nom_requete.addWidget(self.precedent, 1)
+        layout.addLayout(nom_requete)
+        layout.addLayout(graphi)
+        layout.addLayout(analyse_expli)
+        layout.addWidget(self.footer)
         
-        self.layout_horizontal3.addWidget(self.footer)
-        self.layout_vertical1.addLayout(self.layout_horizontal3)
+        self.image = QLabel()
+        pixmap = QPixmap("Logo.png")
+        pixmap = pixmap.scaled(90,90)
+        self.image.setPixmap(pixmap)
+        graphi.addWidget(self.image)
+            
+    def updateGraphi(self, graph):
+        pixmap = QPixmap(graph)
+        pixmap = pixmap.scaled(350,300)
+        self.image.setPixmap(pixmap)
+    
         
-        # Ajouter un espace extensible
-        self.layout_vertical1.addStretch(1)
+    def setRequete(self, req) -> None :
+        self.requete.setText(req)
         
-        self.setLayout(self.layout_vertical1)
+    def setGraph(self, graphique) -> None :
+        self.graph.setText(graphique)
+    
+    def setAnalyse(self, an) -> None :
+        self.analyse.setText(an)
+        
+    def setExplication(self, exp) -> None :
+        self.explication.setText(exp)
+    
+    def changeRequete(self) -> None :
+        self.requeteChanged.emit(self.getAllInfo())
+
+    def requetePrecedente(self) -> None :
+        self.previousClicked.emit()
+
+    def requeteSuivante(self) -> None :
+        self.nextClicked.emit()
+
+    def getAllInfo(self) -> dict:
+        resultat = {"requete":(self.requete.text()), 
+                    "graph":self.graph.text(), 
+                    "analyse":self.analyse.toPlainText(), 
+                    "explication": self.explication.toPlainText()}
+        return resultat
+
 
 class Interface3(QWidget):
     
@@ -438,11 +490,6 @@ class Total(QWidget):
 
     def __init__(self):
         super().__init__()
-        
-        self.req : QLineEdit = QLineEdit("requete")
-        self.graph : QLineEdit = QLineEdit("graph")
-        self.analyse : QLineEdit = QLineEdit("analyse")
-        self.explication : QLineEdit = QLineEdit("explication")
 
         self.interf_1 = Interface1()
         self.interf_2 = Interface2()
@@ -456,13 +503,14 @@ class Total(QWidget):
         self.interf_2.footer.precedent.clicked.connect(self.changeFenetrePrec)
         self.interf_3.footer.precedent.clicked.connect(self.changeFenetrePrec)
         
-    
             
-    def updateRequete(self, req: str, graph:str, analyse: str, explication: str) -> None :
-        self.req.setText(req)
-        self.graph.setText(graph)
-        self.analyse.setText(analyse)
-        self.explication.setText(explication)
+    # update : mise à jour de la vue
+    def updateRequete(self, requete: str, graph:str, analyse: str, 
+                        explication: str) -> None :
+        self.interf_2.setRequete(requete)
+        self.interf_2.setGraph(graph)
+        self.interf_2.setAnalyse(analyse)
+        self.interf_2.setExplication(explication)
 
     def changeFenetreSuiv(self):
         if self.interf_2.isHidden() == True and self.interf_1.isHidden() == True:
@@ -485,8 +533,6 @@ class Total(QWidget):
         else:
             self.interf_1.hide()
             self.interf_3.show()
-
-        
 
 
 if __name__ == "__main__":

@@ -2,8 +2,8 @@ import sys, TestSecondeInterface, psycopg2, json, copy, os
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
-from Controlleur_Arno import *
-from PyQt6.QtWidgets import QApplication
+from controller import *
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
 import bignono, requete
@@ -11,13 +11,13 @@ import bignono, requete
 simon = "skyblue"
 class Controller():
     def __init__(self) -> None:
-        self.DB_NAME = "sae_bdd"
-        self.DB_USER = "wissocq"
-        self.DB_PASS = "arnaudwq"
+        # Connection to database
+        self.DB_NAME = "sae"
+        self.DB_USER = "henrion"
+        self.DB_PASS = "mathou"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
-        #connection à la base de donnée
         try:
             conn = psycopg2.connect(database=self.DB_NAME,
                                     user=self.DB_USER,
@@ -38,6 +38,13 @@ class Controller():
         self.ajoutComboBoxPays()
 
         self.vue.interf_1.footer.requete.clicked.connect(self.CommandeMap)
+
+        # slots ie callback
+        self.vue.interf_2.nextClicked.connect(self.next)
+        self.vue.interf_2.previousClicked.connect(self.previous)
+        self.vue.interf_2.requeteChanged.connect(self.update)
+
+        self.vue.interf_1.footer.requete.clicked.connect(self.Commande)
         self.vue.interf_1.liste_pays.paysChange.connect(self.ajoutComboBoxComp)
 
         self.vue.interf_1.liste_compagnies.combo_total.currentIndexChanged.connect(self.getInfosCompagnie)
@@ -53,16 +60,16 @@ class Controller():
         self.vue.interf_1.informations.UpdateInfos(rows[0],rows[1],rows[2],rows[3],rows[4])
         
     def maj_vue(self) -> None:
-        r =self.modele.getRequete()
-        self.vue.updateRequete(r.requete,r.graph,r.analyse,r.explication)
+        r = self.modele.getRequete()
+        print(r)
+        if isinstance(r, requete.Requete):
+            self.vue.updateRequete(r.requete,r.graph,r.analyse,r.explication)
     
     def update(self,d) -> None :
         r2 = requete.Requete(d['requete'], d['graph'], d['analyse'], d['explication'])
-
         self.modele.update(r2)
- 
-    def CommandeMap(self):
 
+    def Commande(self):
         try:
             self.fabriqueRequeteMap()
         except:

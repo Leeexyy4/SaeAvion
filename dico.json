@@ -1,20 +1,75 @@
 {
     "dico": [
         {
-            "requete": "Quels est le nombre d'aeroport dans le monde",
-            "graph": "aeroport_monde.png",
-            "analyse": "On remarque qu'il y a 900 aeroports dans le monde mdr",
-            "explication": "big mytho en fait j'ai mm pas regardé"
+            "requete": "Quelle est la pollution totale des arrivées par pays ?",
+            "graph": "./images/pollution_pays_arr.png",
+            "analyse": "Le plus grand émetteur de CO2 pour les arrivées sont les États-Unis",
+            "explication": "/"
         },{
-            "requete": "Pipi caca prout",
-            "graph": "prout.png",
-            "analyse": "Simon ne pete jamais",
-            "explication": "il est propre"
+            "requete": "Quelle est la pollution totale des départs par pays ?",
+            "graph": "./images/pollution_pays_dep.png",
+            "analyse": "Le plus grand émetteur de CO2 pour les départs sont les États-Unis",
+            "explication": "/"
         },{
-            "requete": "Arnaud grimace",
-            "graph": "arnaud.png",
-            "analyse": "On voit que les grimaces d'arnaud ont gagnés un granny award",
-            "explication": "il est 1er degré"
+            "requete": "Quelle est la pollution par passagers des vols longs ?",
+            "graph": "./images/pollution_sieges_long.png",
+            "analyse": "Ce sont les avions à deux places qui émettent le plus de CO2",
+            "explication": "La pollution étant calculée en fonction du nombre de passagers moins il y a de passagers plus la pollution est élevée par passagers"
+        },{
+            "requete": "Quelle est la pollution par passagers des vols longs pour le tourisme ?",
+            "graph": "./images/pollution_sieges_long_tourisme.png",
+            "analyse": "Ce sont les avions avec peu de places qui émettent le plus de CO2",
+            "explication": "La pollution étant calculée en fonction du nombre de passagers moins il y a de passagers plus la pollution est élevée par passagers"
+        },{
+            "requete": "Quelle est la pollution par passagers des vols moyens ?",
+            "graph": "./images/pollution_sieges_moyens.png",
+            "analyse": "Certains avions consomment plus",
+            "explication": "Les avions qui consomment plus sont plus utilisés dans le trafic aérien"
+        },{
+            "requete": "Quelle est la pollution par passagers des vols moyens pour le tourisme ?",
+            "graph": "./images/pollution_sieges_moyens_tourisme.png",
+            "analyse": "Certains avions consomment plus",
+            "explication": "Les avions qui consomment plus sont plus utilisés dans le trafic aérien"
+        },{
+            "requete": "Quelle est la pollution par passagers des vols courts ?",
+            "graph": "./images/pollution_sieges_courts.png",
+            "analyse": "Certains avions consomment plus",
+            "explication": "Les avions qui consomment plus sont plus utilisés dans le trafic aérien"
+        },{
+            "requete": "Quelle est la pollution par passagers des vols courts pour le tourisme ?",
+            "graph": "./images/pollution_sieges_courts_tourisme.png",
+            "analyse": "Certains avions consomment plus",
+            "explication": "Les avions qui consomment plus sont plus utilisés dans le trafic aérien"
+        },{
+            "requete": "Quelle est la pollution par compagnie ?",
+            "graph": "./images/pollution_compagnies.png",
+            "analyse": "La compagnie qui émet le plus de CO2 par passagers est la compagnie Lufthansa Technik",
+            "explication": "Il consomme preque trois fois plus que la compagnie Providence Aviation Services qui est en 2ème position"
+        },{
+            "requete": "Quels sont les 10 avions voyageant le plus ? ",
+            "graph": "./images/avions_voyage+.png",
+            "analyse": "L'Airbus A320 est l'avion faisant le plus de trajets",
+            "explication": "Les avions Airbus sont conçues exprès pour les voyages à longue distance et pour le tourisme"
+        },{
+            "requete": "Quels sont les 20 pays qui possedent le plus d'aeroport ? ",
+            "graph": "./images/20_aeroport_pays.png",
+            "analyse": "Les Etats-Unis sont largement devant les autres pays, un peu plus du triple du canada",
+            "explication": "Le pays des Etats-Unis est l'un des plus grand pays. Pour voyager d'etats en etats, les habitants prennent souvent l'avion"
+        },{
+            "requete": "Quels sont les 15 avions ayant les plus grands nombre de sieges ?",
+            "graph": "./images/nom_des_15_avions_avec_le_plus_grand_nombre_de_sieges.png",
+            "analyse": "Le Boeing 747-400D arrive en tete avec 660 sieges a bord",
+            "explication": "Les Boeing, tout comme les Airbus, sont des avions conçues pour les trajets à longues distances."
+        },{
+            "requete": "Quelles sont les 10 compagnies ayant les plus grand nombre de vols ?",
+            "graph": "./images/10_compagnies_avec_le_plus_grand_nombre_de_vols.png",
+            "analyse": "La compagnie 4D Air réalise la plus grand nombre de vols",
+            "explication": "/"
+        },{
+            "requete": "Quels sont les 10 pays ayant les plus grand d'arrivees ?",
+            "graph": "./images/10_pays_ayant_le_plus_darrivees_davions_par_ordre_croissant.png",
+            "analyse": "Les Etats-Unis arrivent premier",
+            "explication": "Le pays des Etats-Unis est tres grand. Il y a donc enormement de vols internes. C'est donc logique qu'ils arrivent en tete. "
         }
     ]
 }
