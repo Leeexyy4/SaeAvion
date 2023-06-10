@@ -12,9 +12,9 @@ simon = "skyblue"
 class Controller():
     def __init__(self) -> None:
         # Connection to database
-        self.DB_NAME = "sae"
-        self.DB_USER = "henrion"
-        self.DB_PASS = "mathou"
+        self.DB_NAME = "sae_bdd"
+        self.DB_USER = "crpsim"
+        self.DB_PASS = "simoncrp"
         self.DB_HOST = "127.0.0.1"
         self.DB_PORT = "5432"
 
@@ -106,10 +106,12 @@ class Controller():
     def next(self) -> None:
         self.modele.next()
         self.maj_vue()
+        self.vue.interf_2.updateGraphi(self.vue.interf_2.getGraph())
 
     def previous(self) -> None:
         self.modele.previous()
         self.maj_vue()
+        self.vue.interf_2.updateGraphi(self.vue.interf_2.getGraph())
 
     def ajoutComboBoxPays(self):
 

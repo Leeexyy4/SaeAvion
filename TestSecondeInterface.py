@@ -297,7 +297,6 @@ class Graphique(QWidget):
         self.setLayout(self.histoire_comp)
 
     def updateGraphique(self, image_path):
-
         pixmap = QPixmap(image_path)
         pixmap = pixmap.scaled(350,300)
         self.histoire_comp_label.setPixmap(pixmap)
@@ -420,7 +419,9 @@ class Interface2(QWidget):
         pixmap = QPixmap(graph)
         pixmap = pixmap.scaled(350,300)
         self.image.setPixmap(pixmap)
-    
+        
+    def getGraph(self) -> str:
+        return self.graph.text()
         
     def setRequete(self, req) -> None :
         self.requete.setText(req)
