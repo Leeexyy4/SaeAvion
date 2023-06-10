@@ -1,12 +1,14 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap
 
 # Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
-class Listes_Pays(QWidget):
+class Liste_Pays(QWidget):
     def __init__(self) -> None:
         super().__init__()
+
+        self.pays_requete = []
         
         # Ajout des informations des pays
         self.nom_pays = QLabel("Nom du pays")
@@ -15,16 +17,14 @@ class Listes_Pays(QWidget):
 
         # Création de la combobox des pays
         self.combo_total = QComboBox()
-        self.combo_total.addItem("Afghanistan")
-        self.combo_total.addItem("Albania")
-        self.combo_total.addItem("Algeria")
-        self.combo_total.addItem("American Samao")
+        self.combo_total.currentIndexChanged.connect(self.ajoutPaysRequete)
         
         # Ajout du select all
         self.selectall = QCheckBox("Select All")
         
         # Ajout du deselect all
         self.deselectall = QCheckBox("Deselect All")
+        self.deselectall.clicked.connect(self.resetPaysRequete)
         
         # Création des layout verticaux et horizontaux
         layout_ver = QVBoxLayout()
@@ -42,11 +42,24 @@ class Listes_Pays(QWidget):
         
         # Setter du layout
         self.setLayout(layout_ver)
+
+    def ajoutPaysRequete(self):
+        self.pays_requete.append(self.combo_total.currentText())
+        print(self.pays_requete)
+
+    #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
+    def resetPaysRequete(self):
+        if self.deselectall.isChecked() == True:
+            self.pays_requete = []
         
 # Classe Liste_compagnies qui reprend le bandeau déroulant des compagnies et le texte associé
 class Liste_Compagnies(QWidget):
+    #signaux
+
     def __init__(self) -> None:
         super().__init__()
+
+        self.compagnie_requete = []
         
         # Ajout des informations des compagnies
         self.nom_comp = QLabel("Nom de la compagnie")
@@ -55,16 +68,14 @@ class Liste_Compagnies(QWidget):
         
         # Création de la combobox des compagnies
         self.combo_total = QComboBox()
-        self.combo_total.addItem("1-2-go")
-        self.combo_total.addItem("12 North")
-        self.combo_total.addItem("135 Airways")
-        self.combo_total.addItem("1Time Airline")
+        self.combo_total.currentIndexChanged.connect(self.ajoutCompRequete)
 
         # Ajout du select all
         self.selectall = QCheckBox("Select All")
         
         # Ajout du deselect all
         self.deselectall = QCheckBox("Deselect All")
+        self.deselectall.clicked.connect(self.resetCompRequete)
         
         # Création des layout verticaux et horizontaux
         layout_ver = QVBoxLayout()
@@ -81,6 +92,15 @@ class Liste_Compagnies(QWidget):
         
         # Setter du layout
         self.setLayout(layout_ver)
+
+    def ajoutCompRequete(self):
+        self.compagnie_requete.append(self.combo_total.currentText())
+        print(self.compagnie_requete)
+
+    #pour reset la liste des compagnie de la requete SQL pck sinon il faut fermer l'appli et c'est longo
+    def resetCompRequete(self):
+        if self.deselectall.isChecked() == True:
+            self.compagnie_requete = []
         
 
 # Classe Informations qui reprend le logo et les informations
@@ -186,6 +206,8 @@ class Image(QWidget):
         self.setLayout(layout_ver)
 
 class Footer(QWidget):
+    #signaux
+
     def __init__(self):
         super().__init__()
         
@@ -222,6 +244,9 @@ class Graphique(QWidget):
         
 
 class Interface(QWidget):
+    #signaux
+
+    envoiCommande = pyqtSignal(str)
     def __init__(self):
         super().__init__()
         
@@ -234,7 +259,7 @@ class Interface(QWidget):
         self.setWindowIcon(self.iconeFenetre)
         
         # Création des instances des classes Listes_Pays et Liste_Compagnies
-        self.listes_pays = Listes_Pays()
+        self.liste_pays = Liste_Pays()
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
         self.footer = Footer()
@@ -250,14 +275,8 @@ class Interface(QWidget):
         self.layout_horizontal4 = QHBoxLayout()
         
         # Ajout des widgets
-        self.layout_horizontal4.addWidget(self.listes_pays)
-        self.layout_horizontal4.addWidget(self.liste_compagnies)
-        self.layout_horizontal4.addWidget(self.graphique)
-        self.layout_horizontal4.stretch(1)
-        self.layout_vertical1.addLayout(self.layout_horizontal4)
-        
-        self.layout_horizontal1.addWidget(self.image)
-        self.layout_horizontal1.addWidget(self.informations)
+        self.layout_horizontal1.addWidget(self.liste_pays)
+        self.layout_horizontal1.addWidget(self.liste_compagnies)
         self.layout_vertical1.addLayout(self.layout_horizontal1)
         
         self.layout_horizontal2.addWidget(self.informations)
