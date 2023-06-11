@@ -520,6 +520,7 @@ class DemandeBDD(QWidget):
         self.db_name = QLineEdit()
         self.db_user = QLineEdit()
         self.db_pass = QLineEdit()
+        self.db_pass.setEchoMode(QLineEdit.EchoMode.Password)
 
         self.db_name.setPlaceholderText("Nom de votre base de données")
         self.db_user.setPlaceholderText("Votre nom d'utilisateur SQL")
