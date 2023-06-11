@@ -6,7 +6,7 @@ from controller import *
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLabel, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QDateEdit, QFileDialog, QRadioButton, QCheckBox
 from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
-import bignono, requete
+import carnet, requete
 
 simon = "skyblue"
 
@@ -20,7 +20,7 @@ class Controller():
     def __init__(self) -> None:
 
         self.requeteSQL = ""
-        self.modele = bignono.Bignono('dico.json')
+        self.modele = carnet.Carnet('dico.json')
         self.vue = TestSecondeInterface.Total()
 
         self.demandeBDD = TestSecondeInterface.DemandeBDD()

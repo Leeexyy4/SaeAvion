@@ -4,7 +4,7 @@ import json, copy, os, requete
 # -------------------------------------------------
 # --- class Annuaire
 # -------------------------------------------------
-class Bignono:
+class Carnet:
     # constructor
     def __init__(self, jsonFile : (str|None) = None) -> None:
         # attributs
@@ -85,10 +85,10 @@ class Bignono:
 if __name__ == "__main__" :
     print('TEST: class bigbigbigbigbigbigbig Nnnnoooooowwwwnnnnnnnnnnooooowwwwwwwwwwwwwww')
     reqqq : requete.Requete= requete.Requete('Cmb de pet par heure xd', 'Pipiprout.png', "Lol un prout ", "Famous prout xd") 
-    bignono : Bignono = Bignono()
-    bignono.addRequete(reqqq)
+    carnet : Carnet = Carnet()
+    carnet.addRequete(reqqq)
     print("\ttesting add,getbyName:", end= ' ')
-    print(bignono.getRequetebyReq("Cmb de pet par heure xd"))
+    print(carnet.getRequetebyReq("Cmb de pet par heure xd"))
 
     print("\ttesting from json:", end= ' ')
-    annuaireJS : Bignono = Bignono('dico.json')
+    annuaireJS : Carnet = Carnet('dico.json')
