@@ -2,9 +2,9 @@ import sys
 import typing
 import requete
 from PyQt6 import QtCore
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QCheckBox, QLineEdit, QTextEdit, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLabel, QRadioButton, QLineEdit, QTextEdit, QPushButton
 from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtGui import QIcon, QPixmap, QPalette
 
 # Classe Liste_pays qui reprend le bandeau déroulant du pays et le texte associé
 class Liste_Pays(QWidget):
@@ -132,29 +132,32 @@ class Liste_Options(QWidget):
 
         self.combo_option = QComboBox()
         self.combo_option.addItem("Pollution par compagnie")
-        self.combo_option.addItem("Pollution par pays")
-        self.combo_option.addItem("Pollution par vol (court courrier)")
-        self.combo_option.addItem("Pollution par vol (moyen courrier)")
-        self.combo_option.addItem("Pollution par vol (long courrier)")
+        self.combo_option.addItem("Pollution par pays (départs)")
+        self.combo_option.addItem("Pollution par pays (arrivées))")
 
         self.combo_option.currentTextChanged.connect(self.ajouteOption)
 
+
+        #cette option est celle par défaut
+        self.option_graphiqueplus = QRadioButton("10 plus polluant.e.s")
+        self.option_graphiqueplus.setChecked(True)
+
+
+        self.option_graphiquemoins = QRadioButton("10 moins polluant.e.s")
+
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.combo_option)
+        self.layout.addWidget(self.option_graphiqueplus)
+        self.layout.addWidget(self.option_graphiquemoins)
         self.setLayout(self.layout)
 
     def ajouteOption(self):
-        if self.combo_option.currentIndex ==1:
+        if self.combo_option.currentIndex() ==0:
             self.option_choisie = "compagnie"
-        if self.combo_option.currentIndex ==2:
-                self.option_choisie = "pays"
-        if self.combo_option.currentIndex ==3:
-            self.option_choisie = "vol_court"
-
-        if self.combo_option.currentIndex ==4:
-            self.option_choisie = "vol_moyen"
-        if self.combo_option.currentIndex ==5:
-            self.option_choisie = "vol_long"
+        elif self.combo_option.currentIndex() ==1:
+            self.option_choisie = "pays_dep"
+        elif self.combo_option.currentIndex() ==2:
+            self.option_choisie = "pays_arr"
 
 
 
@@ -296,9 +299,10 @@ class Graphique(QWidget):
         
         self.setLayout(self.histoire_comp)
 
-    def updateGraphique(self, image_path):
+    def updateGraphique(self, image_path:str, size:tuple):
+    
         pixmap = QPixmap(image_path)
-        pixmap = pixmap.scaled(350,300)
+        pixmap = pixmap.scaled(size[0],size[1])
         self.histoire_comp_label.setPixmap(pixmap)
         
 
@@ -313,10 +317,11 @@ class Interface1(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Interface 1 : Emplacement des aéroports d'arrivée des compagnies")
+        self.setStyleSheet('Interface1{background:#D4F6FF}')
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
+        self.iconeFenetre.addFile("images/Logo.png")
         self.setWindowIcon(self.iconeFenetre)
         
         # Création des instances des classes Listes_Pays et Liste_Compagnies
@@ -324,7 +329,7 @@ class Interface1(QWidget):
         self.liste_compagnies = Liste_Compagnies()
         self.informations = Informations()
         self.footer = Footer()
-        self.image = Image('Logo.png')
+        self.image = Image('images/Logo.png')
         self.graphique = Graphique()
 
         # Affichage de l'interface
@@ -351,8 +356,6 @@ class Interface1(QWidget):
         
         self.setLayout(self.layout_vertical1)
 
-        self.show()
-
 
 class Interface2(QWidget):
     # signal
@@ -367,6 +370,7 @@ class Interface2(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Requêtes qui pourraient vous interesser...")
+        self.setStyleSheet('Interface2{background:#FFC1C1}')
 
         # Widgets
         self.requete = QLineEdit()
@@ -465,6 +469,7 @@ class Interface3(QWidget):
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
         self.setWindowTitle("Interface 3: Graphiques de tests du CO2")
+        self.setStyleSheet('Interface3{background:#FFD8BE}')
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
@@ -474,13 +479,14 @@ class Interface3(QWidget):
         # Création des instances des classes Listes_Pays et Liste_Compagnies
         self.liste_options = Liste_Options()
         self.footer = Footer()
+        self.graphique = Graphique()
 
         # Affichage de l'interface
         self.layout_vertical = QVBoxLayout()
-        self.layout_horizontal = QHBoxLayout()
         
         # Ajout des widgets
         self.layout_vertical.addWidget(self.liste_options)
+        self.layout_vertical.addWidget(self.graphique)
         self.layout_vertical.addWidget(self.footer)
 
 
@@ -489,6 +495,40 @@ class Interface3(QWidget):
         
         self.setLayout(self.layout_vertical)
 
+class DemandeBDD(QWidget):
+    def __init__(self) -> None:
+    
+        super().__init__()
+
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        self.resize(400, 100)
+        self.setWindowTitle("Bienvenue sur notre interface")
+
+        # Ajout de l'icone Oasix
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("./Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
+
+        #pour obtenir le mdp et l'utilisateur pour accèder à la base de données
+        self.db_name = QLineEdit()
+        self.db_user = QLineEdit()
+        self.db_pass = QLineEdit()
+
+        self.db_name.setPlaceholderText("Nom de votre base de données")
+        self.db_user.setPlaceholderText("Votre nom d'utilisateur SQL")
+        self.db_pass.setPlaceholderText("Votre mot de passe de l'utilisateur SQL")
+
+        self.accepte = QPushButton("Connection à la base de données")
+
+        self.layout.addWidget(self.db_name)
+        self.layout.addWidget(self.db_user)
+        self.layout.addWidget(self.db_pass)
+        self.layout.addWidget(self.accepte)
+
+
+        #seule cette interface est montrée au début
+        self.show()
 
 class Total(QWidget):
 
@@ -508,7 +548,7 @@ class Total(QWidget):
         self.interf_3.footer.precedent.clicked.connect(self.changeFenetrePrec)
         
             
-    # update : mise à jour de la vue
+    # update : mise à jour de la vue pour la 2e interface
     def updateRequete(self, requete: str, graph:str, analyse: str, 
                         explication: str) -> None :
         self.interf_2.setRequete(requete)
@@ -516,6 +556,7 @@ class Total(QWidget):
         self.interf_2.setAnalyse(analyse)
         self.interf_2.setExplication(explication)
 
+    #si les 2 autres interfaces sont cachées, alors cache celle qui ne l'est pas et on affiche la suivante
     def changeFenetreSuiv(self):
         if self.interf_2.isHidden() == True and self.interf_1.isHidden() == True:
             self.interf_3.hide()
@@ -527,6 +568,8 @@ class Total(QWidget):
             self.interf_1.hide()
             self.interf_2.show()
 
+
+    #si les 2 autres interfaces sont cachées, alors cache celle qui ne l'est pas et on affiche la precedente
     def changeFenetrePrec(self):
         if self.interf_2.isHidden() == True and self.interf_1.isHidden() == True:
             self.interf_3.hide()
