@@ -2,9 +2,9 @@
 import json, copy, os, requete
 
 # -------------------------------------------------
-# --- class Annuaire
+# --- class Carnet
 # -------------------------------------------------
-class Bignono:
+class Carnet:
     # constructor
     def __init__(self, jsonFile : (str|None) = None) -> None:
         # attributs
@@ -83,12 +83,16 @@ class Bignono:
 
 # --- main: kind of unit test
 if __name__ == "__main__" :
-    print('TEST: class bigbigbigbigbigbigbig Nnnnoooooowwwwnnnnnnnnnnooooowwwwwwwwwwwwwww')
-    reqqq : requete.Requete= requete.Requete('Cmb de pet par heure xd', 'Pipiprout.png', "Lol un prout ", "Famous prout xd") 
-    bignono : Bignono = Bignono()
-    bignono.addRequete(reqqq)
+    print('TEST: class carnet')
+    reqqq : requete.Requete= requete.Requete('A', 'azertyuiop.png', "aqwzsx", "123456789") 
+    test : Carnet = Carnet()
+    test.addRequete(reqqq)
     print("\ttesting add,getbyName:", end= ' ')
+<<<<<<< Updated upstream:bignono.py
     print(bignono.getRequetebyReq("Cmb de pet par heure xd")) 
+=======
+    print(test.getRequetebyReq("A"))
+>>>>>>> Stashed changes:carnet.py
 
     print("\ttesting from json:", end= ' ')
-    annuaireJS : Bignono = Bignono('dico.json')
+    annuaireJS : Carnet = Carnet('dico.json')
