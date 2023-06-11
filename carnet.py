@@ -2,7 +2,7 @@
 import json, copy, os, requete
 
 # -------------------------------------------------
-# --- class Carnet
+# --- class Annuaire
 # -------------------------------------------------
 class Carnet:
     # constructor
@@ -83,12 +83,12 @@ class Carnet:
 
 # --- main: kind of unit test
 if __name__ == "__main__" :
-    print('TEST: class carnet')
-    reqqq : requete.Requete= requete.Requete('A', 'azertyuiop.png', "aqwzsx", "123456789") 
-    test : Carnet = Carnet()
-    test.addRequete(reqqq)
+    print('TEST: class bigbigbigbigbigbigbig Nnnnoooooowwwwnnnnnnnnnnooooowwwwwwwwwwwwwww')
+    reqqq : requete.Requete= requete.Requete('Cmb de pet par heure xd', 'Pipiprout.png', "Lol un prout ", "Famous prout xd") 
+    carnet : Carnet = Carnet()
+    carnet.addRequete(reqqq)
     print("\ttesting add,getbyName:", end= ' ')
-    print(test.getRequetebyReq("A"))
+    print(carnet.getRequetebyReq("Cmb de pet par heure xd"))
 
     print("\ttesting from json:", end= ' ')
     annuaireJS : Carnet = Carnet('dico.json')
