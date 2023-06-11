@@ -372,6 +372,12 @@ class Interface2(QWidget):
         self.setWindowTitle("Requêtes qui pourraient vous interesser...")
         self.setStyleSheet('Interface2{background:#FFC1C1}')
 
+        # Ajout de l'icone Oasix
+        self.iconeFenetre = QIcon()
+        self.iconeFenetre.addFile("images/Logo.png")
+        self.setWindowIcon(self.iconeFenetre)
+
+
         # Widgets
         self.requete = QLineEdit()
         self.requete.setStyleSheet("min-width: 750px;")
@@ -418,7 +424,7 @@ class Interface2(QWidget):
         layout.addWidget(self.footer)
         
         self.image = QLabel()
-        pixmap = QPixmap("Logo.png")
+        pixmap = QPixmap("images/Logo.png")
         pixmap = pixmap.scaled(90,90)
         self.image.setPixmap(pixmap)
         graphi.addWidget(self.image)
@@ -473,7 +479,7 @@ class Interface3(QWidget):
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
+        self.iconeFenetre.addFile("images/Logo.png")
         self.setWindowIcon(self.iconeFenetre)
         
         # Création des instances des classes Listes_Pays et Liste_Compagnies
@@ -507,7 +513,7 @@ class DemandeBDD(QWidget):
 
         # Ajout de l'icone Oasix
         self.iconeFenetre = QIcon()
-        self.iconeFenetre.addFile("./Logo.png")
+        self.iconeFenetre.addFile("images/Logo.png")
         self.setWindowIcon(self.iconeFenetre)
 
         #pour obtenir le mdp et l'utilisateur pour accèder à la base de données
