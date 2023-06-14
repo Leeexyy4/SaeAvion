@@ -369,7 +369,7 @@ class Interface2(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
-        self.setWindowTitle("Requêtes qui pourraient vous interesser...")
+        self.setWindowTitle("Interface 2 : Requêtes qui pourraient vous interesser...")
         self.setStyleSheet('Interface2{background:#FFC1C1}')
 
         # Ajout de l'icone Oasix
@@ -383,7 +383,7 @@ class Interface2(QWidget):
         self.requete.setStyleSheet("min-width: 750px;")
         self.graph = QLabel()
         self.analyse = QTextEdit("Analyse du graphique par notre équipe")
-        self.explication = QTextEdit("Explication des données du graphiques")
+        self.explication = QTextEdit("Explication des données du graphique")
         self.footer = Footer()
         
         # Read only text
@@ -474,7 +474,7 @@ class Interface3(QWidget):
         
         # Caractéristique de la fenetre de l'interface
         self.resize(800, 400)
-        self.setWindowTitle("Interface 3: Graphiques de tests du CO2")
+        self.setWindowTitle("Interface 3 : Graphiques de tests du CO2")
         self.setStyleSheet('Interface3{background:#FFD8BE}')
 
         # Ajout de l'icone Oasix
