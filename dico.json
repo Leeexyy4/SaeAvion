@@ -29,22 +29,22 @@
             "requete": "Quelle est la pollution par passagers des vols moyens pour le tourisme ?",
             "graph": "./images/pollution_sieges_moyens_tourisme.png",
             "analyse": "- Nous remarquons à nouveau que les avions contenant 9 places sont ceux qui émettent le plus de CO2 : 11 000 kilos par vol par passager.\n- Ensuite, nous retrouvons les avions à 37 places avec 2 600 kilos de CO2 par vol par passager.\n- En 3ème position, les avions à  50 places avec 2 000 kilos de CO2 par vol par passager.",
-            "explication": "Nous avons toujours cette valeur élevée pour les avions à 9 places, les raisons sont les même, le nombre de sièges étant faible, la moyenne est élevée. Ensuite, on remarque clairement ici qu'avec une augmentation du nombre de places, la moyenne de pollution diminue."
+            "explication": "Nous avons toujours cette valeur élevée pour les avions à 9 places, les raisons sont les même, le nombre de sièges étant faible, la moyenne est élevée. \nEnsuite, on remarque clairement ici qu'avec une augmentation du nombre de places, la moyenne de pollution diminue."
         },{
             "requete": "Quelle est la pollution par passagers des vols moyens ?",
             "graph": "./images/pollution_sieges_moyens.png",
             "analyse": "Les avions à 2 places consomment énormément par rapport au reste : 13 millions de kilos environ.\nLe reste est négligeable.",
-            "explication": "grâce à ces données, nous avons pu voir que pour les vols moyens, les avions de plus de deux places sont ce qui consomment le plus. En effet, ce sont des avions commerciaux ou de loisir qui consomment donc beaucoup et pour lesquels la moyenne sera divisée par deux (le nombre de places) ce qui est faible et donc augmente la moyenne. On remarque évidemment que plus le nombre de places augmente, plus la moyenne diminue."
+            "explication": "Grâce à ces données, nous avons pu voir que pour les vols moyens, les avions de plus de deux places sont ce qui consomment le plus : 73,7 kilos. \nEn effet, ce sont des avions commerciaux ou de loisir qui consomment donc beaucoup et pour lesquels la moyenne sera divisée par deux (le nombre de places) ce qui est faible et donc augmente la moyenne. \nOn remarque évidemment que plus le nombre de places augmente, plus la moyenne diminue."
         },{
             "requete": "Quelle est la pollution par passagers des vols courts pour le tourisme ?",
             "graph": "./images/pollution_sieges_courts.png",
             "analyse": "Peu de consommation de CO2 pour les vols courts pour le tourisme",
-            "explication": "/"
+            "explication": ""
         },{
             "requete": "Quelle est la pollution par passagers des vols courts ?",
             "graph": "./images/pollution_sieges_courts_tourisme.png",
             "analyse": "Les avions à 2 places consomment 20 000 kilos de CO2 environ.\nLe reste est négligeable.",
-            "explication": "/"
+            "explication": "Nous remarquons encore une fois que la pollution en Co2 pour les avions de deux places est la plus forte : "
         },{
             "requete": "Quels sont les 10 types d'avions voyageant le plus ? ",
             "graph": "./images/avions_voyage.png",
