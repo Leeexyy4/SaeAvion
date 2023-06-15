@@ -38,13 +38,13 @@
         },{
             "requete": "Quelle est la pollution par passagers des vols courts pour le tourisme ?",
             "graph": "./images/pollution_sieges_courts.png",
-            "analyse": "Peu de consommation de CO2 pour les vols courts pour le tourisme",
-            "explication": ""
+            "analyse": "Peu de consommation de CO2 pour les vols courts pour le tourisme. Tout les vols, sauf ceux à 2 places, émettent un montant de CO2 négligeable. Plus il y a de places, moins l'émission de CO2 par passagers est élevée. On remarque cependant que les vols à 8 passagers émettent moins que ceux à 9 et 11 passagers.",
+            "explication": "Tout d'abord, nous remarquons qu'une colonne est bien élevée que les autres, en effet, il y a un vol touristique court qui ne peut transporter que 2 passagers. Vu que ce vol ne permet que de déplacer 2 personnes, l'émission par siège est bien plus grande. Cela explique donc la diférence. On peut constater que les vols qui ont le moins de passagers sont ceux qui produisent le plus de CO2 par passagers. Cependant les vols à 8 passagers émettent moins que ceux à 9 et 11 passagers. Cela peut s'expliquer par une plus grande distance ou un avion plus polluant."
         },{
             "requete": "Quelle est la pollution par passagers des vols courts ?",
             "graph": "./images/pollution_sieges_courts_tourisme.png",
             "analyse": "Les avions à 2 places consomment 20 000 kilos de CO2 environ.\nLe reste est négligeable.",
-            "explication": "Nous remarquons encore une fois que la pollution en Co2 pour les avions de deux places est la plus forte : "
+            "explication": "Nous remarquons que les vols court n'émettent pas beaucoup de CO2 en général et que le CO2 émit ne baisse pas beaucoup en fonction du nombre de siège de chaque vol."
         },{
             "requete": "Quels sont les 10 types d'avions voyageant le plus ? ",
             "graph": "./images/avions_voyage.png",
