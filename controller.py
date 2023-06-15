@@ -8,6 +8,8 @@ from PyQt6.QtCore import Qt, QDate, pyqtSignal
 from PyQt6 import QtCore, QtGui, QtWidgets
 import carnet, requete
 
+#Ce code a été réalisé par Beaurepaire, Carpentier, Guilbert, Henrion, Lamour, Wissocq
+
 simon = "skyblue"
 
 font = {'family' : 'sans-serif',
