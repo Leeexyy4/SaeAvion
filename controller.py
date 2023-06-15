@@ -143,7 +143,7 @@ class Controller():
         plt.figure(figsize=(15,5))
         plt.barh(x,y, linewidth=0.5)
         plt.savefig(fname="./images/graphiqueCO2")
-        self.vue.interf_3.graphique.updateGraphique("./images/graphiqueCO2.png", (800,400))
+        self.vue.interf_3.graphique.updateGraphique("./images/graphiqueCO2.png", (1200, 500))
 
         
     def next(self) -> None:

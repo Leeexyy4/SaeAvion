@@ -305,6 +305,24 @@ class Graphique(QWidget):
         pixmap = pixmap.scaled(size[0],size[1])
         self.histoire_comp_label.setPixmap(pixmap)
         
+class GraphiqueBis(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.histoire_comp = QVBoxLayout()
+        self.histoire_comp_label = QLabel("Graphique de la requete : ")
+        pixmap = QPixmap()
+        self.histoire_comp_label.setPixmap(pixmap)
+
+        self.histoire_comp.addWidget(self.histoire_comp_label)
+        
+        self.setLayout(self.histoire_comp)
+
+    def updateGraphique(self, image_path:str, size:tuple):
+    
+        pixmap = QPixmap(image_path)
+        pixmap = pixmap.scaled(size[0],size[1])
+        self.histoire_comp_label.setPixmap(pixmap)
+        
 
 class Interface1(QWidget):
 
