@@ -33,8 +33,8 @@
         },{
             "requete": "Quelle est la pollution par passagers des vols moyens ?",
             "graph": "./images/pollution_sieges_moyens.png",
-            "analyse": "Les avions à 2 places consomment énormément par rapport au reste : 73,7 milles kilos environ.\nLe reste est négligeable.",
-            "explication": "Grâce à ces données, nous avons pu voir que pour les vols moyens, les avions de plus de deux places sont ce qui consomment le plus : 73,7 milles kilos. \nEn effet, ce sont des avions commerciaux ou de loisir qui consomment donc beaucoup et pour lesquels la moyenne sera divisée par deux (le nombre de places) ce qui est faible et donc augmente la moyenne. \nOn remarque évidemment que plus le nombre de places augmente, plus la moyenne diminue."
+            "analyse": "Les avions à 2 places consomment énormément par rapport au reste : 73,7 mille kilos environ.\nLe reste est négligeable.",
+            "explication": "Grâce à ces données, nous avons pu voir que pour les vols moyens, les avions de plus de deux places sont ce qui consomment le plus : 73,7 mille kilos. \nEn effet, ce sont des avions commerciaux ou de loisir qui consomment donc beaucoup et pour lesquels la moyenne sera divisée par deux (le nombre de places) ce qui est faible et donc augmente la moyenne. \nOn remarque évidemment que plus le nombre de places augmente, plus la moyenne diminue."
         },{
             "requete": "Quelle est la pollution par passagers des vols courts pour le tourisme ?",
             "graph": "./images/pollution_sieges_courts.png",
