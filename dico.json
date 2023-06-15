@@ -1,9 +1,9 @@
 {
     "dico": [
         {
-            "requete": "Quelle est la pollution par compagnie ?",
+            "requete": "Quelle est la pollution par compagnie par rapport aux vols touristiques ?",
             "graph": "./images/pollution_compagnies.png",
-            "analyse": "- La compagnie University Air Squadron émet 1,2 millions de kilos de CO2 et se retrouve en 1ère place du classement.\n- La compagnie South African Airways émet un peu moins d'1,2 millions de kilos de CO2 et se retrouve en 2nde place du classement.\n- La compagnie American Airlins émet 1 million de kilos de CO2 et se retrouve en 3ème place du classement.\n- La compagnie Kaiser Air émet aussi environ 1 million de kilos de CO2 et se retrouve en 4ème place du classement.\n- La compagnie Lufthansa Technik émet 990,9 mille kilos de CO2 et se retrouve en 5ème place du classement.",
+            "analyse": "- La compagnie University Air Squadron émet 1,2 millions de kilos de CO2 et se retrouve en 1ère place du classement.\n- La compagnie South African Airways émet un peu moins d'1,2 millions de kilos de CO2 et se retrouve en 2nde place du classement.\n- La compagnie American Airlines émet 1 million de kilos de CO2 et se retrouve en 3ème place du classement.\n- La compagnie Kaiser Air émet aussi environ 1 million de kilos de CO2 et se retrouve en 4ème place du classement.\n- La compagnie Lufthansa Technik émet 990,9 mille kilos de CO2 et se retrouve en 5ème place du classement.",
             "explication": "/"
         },{
             "requete": "Quelle est la pollution totale des départs par pays ?",
@@ -18,22 +18,22 @@
         },{
             "requete": "Quelle est la pollution par passagers des vols longs pour le tourisme ?",
             "graph": "./images/pollution_sieges_long_tourisme.png",
-            "analyse": "Les avions contenant 9 places sont ceux qui émettent le plus de CO2 : 1.1 milliards de kilos.\nLe reste est négligeable.",
-            "explication": "/"
+            "analyse": "- Nous remarquons tout de suite que les avions contenant 9 places sont ceux qui émettent le plus de CO2 : 91 800 kilos par vol par passager.\n- Ensuite, nous retrouvons les avions à 37 places avec 17 300 kilos de CO2 par vol par passager.\n- En 3ème position, les avions à 122 places avec 4 300 kilos de CO2 par vol par passager.\n- Suivi de très près par les avions à  50 places qui eux émettent 4 200 kilos de CO2 par vol par passager.",
+            "explication": "Tout d'abord, nous remarquons une valeur très étonnante, et après vérification, nous avons remarqué qu'il s'agit que d'un unique vol avec une pollution moyenne par passager par vol de 91 800 kilos de CO2. Il à une route de Sinop en Turquie jusqu'à Panama, ce qui est assez long et donc polluant, mais il n'est divisé que par 9 car il possède 9 places, ce qui pourrait expliquer cette valeur. Ensuite, on remarque qu'avec une augmentation du nombre de places, la moyenne de pollution diminue. Autrement dit, plus les avions possèdent de places, plus ils sont 'économiques'"
         },{
             "requete": "Quelle est la pollution par passagers des vols longs ?",
             "graph": "./images/pollution_sieges_long.png",
-            "analyse": "Les avions contenant 2 et 9 places sont ceux qui émettent le plus de CO2 à eux deux : 3.7 milliards de kilos.\nLe reste est négligeable.",
-            "explication": "/"
+            "analyse": "Les avions contenant 2 sont clairement ceux qui émettent le plus de CO2 : 250 200 kilos par vol par personne.\nLe reste est négligeable.",
+            "explication": "Comme prévue, les avions 2 places sont ceux qui polluent le plus. En effet, ce sont des avions commerciaux où de loisir qui consomme donc beaucoup et pour lesquelles la moyenne sera divisée par le nombre de place : 2, ce qui est très faible et qui fait monter la moyenne. On remarque évidemment que plus le nombre de places augmente, plus la moyenne diminue."
         },{
             "requete": "Quelle est la pollution par passagers des vols moyens pour le tourisme ?",
             "graph": "./images/pollution_sieges_moyens_tourisme.png",
-            "analyse": "Les avions contenant 9 places sont ceux qui émettent le plus de CO2 : 1.6 millions de kilos.\nLe reste est négligeable.",
-            "explication": "/"
+            "analyse": "- Nous remarquons à nouveau que les avions contenant 9 places sont ceux qui émettent le plus de CO2 : 11 000 kilos par vol par passager.\n- Ensuite, nous retrouvons les avions à 37 places avec 2 600 kilos de CO2 par vol par passager.\n- En 3ème position, les avions à  50 places avec 2 000 kilos de CO2 par vol par passager.",
+            "explication": "Nous avons toujours cette valeur élevée pour les avions à 9 places, les raisons sont les même, le nombre de sièges étant faible, la moyenne est élevée. Ensuite, on remarque clairement ici qu'avec une augmentation du nombre de places, la moyenne de pollution diminue."
         },{
             "requete": "Quelle est la pollution par passagers des vols moyens ?",
             "graph": "./images/pollution_sieges_moyens.png",
-            "analyse": "Les avions a 2 places consomment énormément par rapport au reste : 13 millions de kilos environ.\nLe reste est négligeable.",
+            "analyse": "Les avions à 2 places consomment énormément par rapport au reste : 13 millions de kilos environ.\nLe reste est négligeable.",
             "explication": "/"
         },{
             "requete": "Quelle est la pollution par passagers des vols courts pour le tourisme ?",
@@ -43,7 +43,7 @@
         },{
             "requete": "Quelle est la pollution par passagers des vols courts ?",
             "graph": "./images/pollution_sieges_courts_tourisme.png",
-            "analyse": "Les avions a 2 places consomment 20 000 kilos dde CO2 environ.\nLe reste est négligeable.",
+            "analyse": "Les avions à 2 places consomment 20 000 kilos dde CO2 environ.\nLe reste est négligeable.",
             "explication": "/"
         },{
             "requete": "Quels sont les 10 types avions voyageant le plus ? ",
@@ -70,6 +70,11 @@
             "graph": "./images/10_pays_ayant_le_plus_darrivees_davions_par_ordre_croissant.png",
             "analyse": "Nous retrouvons les Etats-Unis en 1ère position avec 20 890 arrivées par cycle.\n- La Chine est en 2ème position avec 9 101 arrivées.\n- L'Allemagne est en 3ème position avec 3 547 arrivées.\n- L'Angleterre est en 4ème position avec 3 349 arrivées.\n- L'Espagne est en 5ème position avec 2 550 arrivées.",
             "explication": "- Les États-Unis se classent en première position avec 20 890 arrivées par cycle. Les États-Unis étant un pays vaste et très fréquenté par les voyageurs, il est logique qu'ils occupent la première place en termes d'arrivées. Les États-Unis sont une destination populaire pour le tourisme, les voyages d'affaires et les liaisons internationales, ce qui explique le nombre élevé d'arrivées.\n- La Chine se positionne en deuxième place avec 9 101 arrivées par cycle. La Chine est également un pays à la fois vaste et densément peuplé, avec une économie en croissance et un secteur touristique en expansion. L'augmentation du nombre d'arrivées en Chine peut être attribuée à la croissance économique, aux investissements dans le secteur du tourisme et à l'ouverture progressive du pays aux visiteurs étrangers.\n- L'Allemagne occupe la troisième position avec 3 547 arrivées par cycle. L'Allemagne est une destination touristique populaire en Europe, grâce à ses villes historiques, sa culture riche et sa position centrale sur le continent. De plus, l'Allemagne est un important hub de transport, ce qui attire un nombre significatif de voyageurs en transit.\n- L'Angleterre se classe quatrième avec 3 349 arrivées par cycle. L'Angleterre, en tant que partie du Royaume-Uni, est également une destination touristique prisée, avec des attractions emblématiques comme Londres, son histoire riche et ses paysages variés. De plus, l'Angleterre est un centre d'affaires et un carrefour aérien important, attirant ainsi un grand nombre de visiteurs.\n- L'Espagne est en cinquième position avec 2 550 arrivées par cycle. L'Espagne est une destination touristique très populaire en raison de son climat méditerranéen, de ses plages, de sa riche culture et de ses sites historiques. Le pays accueille également de nombreux visiteurs internationaux grâce à ses infrastructures touristiques bien développées et à sa position géographique en tant que passerelle vers l'Europe."
+        },{
+            "requete": "Quelle est la pollution par compagnie ?",
+            "graph": "./images/pollution_compagnies_2.png",
+            "analyse": "- La compagnie Lufthansa Technik émet 4,6 millions de kilos de CO2 et se retrouve en 1ère place du classement.\n- La compagnie University Air Squadron émet un peu moins de 4,4 millions de kilos de CO2 et se retrouve en 2nde place du classement.\n- La compagnie American Airlines émet 3 millions de kilos de CO2 et se retrouve en 3ème place du classement.\n- La compagnie Savanair (Angola) émet environ 2,6 millions de kilos de CO2 et se retrouve en 4ème place du classement.\n- Enfin, la compagnie United States Air Force émet 2,6 millions de kilos de CO2 et se retrouve en 5ème place du classement.",
+            "explication": "/"
         }
     ]
 }
